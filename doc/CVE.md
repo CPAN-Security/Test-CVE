@@ -90,6 +90,7 @@ want the results for further analysis, use `cve`.
 Return a list of found CVE's per release. The format will be somewhat like
 
     [ { release => "Some-Module",
+        vsn     => "0.45",
         cve     => [
           { av  => [ "<1.23" ],
             cid => "CPANSA-Some-Module-2023-01",
@@ -107,6 +108,10 @@ Return a list of found CVE's per release. The format will be somewhat like
 #### release
 
 The name of the release
+
+#### vsn
+
+The version that was checked
 
 #### cve
 

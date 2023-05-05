@@ -34,6 +34,7 @@
           <li><a href="#cve">cve</a>
             <ul>
               <li><a href="#release">release</a></li>
+              <li><a href="#vsn">vsn</a></li>
               <li><a href="#cve1">cve</a></li>
             </ul>
           </li>
@@ -130,6 +131,7 @@ my $csv = $cve-&gt;csv;</code></pre>
 <p>Return a list of found CVE&#39;s per release. The format will be somewhat like</p>
 
 <pre><code>[ { release =&gt; &quot;Some-Module&quot;,
+    vsn     =&gt; &quot;0.45&quot;,
     cve     =&gt; [
       { av  =&gt; [ &quot;&lt;1.23&quot; ],
         cid =&gt; &quot;CPANSA-Some-Module-2023-01&quot;,
@@ -147,6 +149,10 @@ my $csv = $cve-&gt;csv;</code></pre>
 <h4 id="release">release</h4>
 
 <p>The name of the release</p>
+
+<h4 id="vsn">vsn</h4>
+
+<p>The version that was checked</p>
 
 <h4 id="cve1">cve</h4>
 

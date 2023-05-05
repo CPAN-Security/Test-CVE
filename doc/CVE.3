@@ -166,6 +166,7 @@ Return a list of found CVE's per release. The format will be somewhat like
 .PP
 .Vb 10
 \& [ { release => "Some\-Module",
+\&     vsn     => "0.45",
 \&     cve     => [
 \&       { av  => [ "<1.23" ],
 \&         cid => "CPANSA\-Some\-Module\-2023\-01",
@@ -185,6 +186,11 @@ release
 .IX Subsection "release"
 .PP
 The name of the release
+.PP
+vsn
+.IX Subsection "vsn"
+.PP
+The version that was checked
 .PP
 cve
 .IX Subsection "cve"

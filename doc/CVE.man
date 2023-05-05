@@ -93,6 +93,7 @@ STDIN(1)              User Contributed Perl Documentation             STDIN(1)
        like
 
         [ { release => "Some-Module",
+            vsn     => "0.45",
             cve     => [
               { av  => [ "<1.23" ],
                 cid => "CPANSA-Some-Module-2023-01",
@@ -110,6 +111,10 @@ STDIN(1)              User Contributed Perl Documentation             STDIN(1)
        release
 
        The name of the release
+
+       vsn
+
+       The version that was checked
 
        cve
 
