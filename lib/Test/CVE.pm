@@ -109,10 +109,10 @@ sub _read_MakefilePL {
     {	my $w = qr{[\s\r\n]*};
 	my $q = qr{(?:["']|\b)}; # '"
 	my $a = qr{$q $w => $w $q}x;
-	$mfc =~ m/$q VERSION      $a (\S+?) $q/x and $v       //= $1;
-	$mfc =~ m/$q VERSION_FROM $a (\S+ ) $q/x and $vf      //= $1;
-	$mfc =~ m/$q     NAME     $a (\S+ ) $q/x and $nm      //= $1;
-	$mfc =~ m/$q DISTNAME     $a (\S+ ) $q/x and $release //= $1;
+	$mfc =~ m/$q VERSION      $a (\S+?) $q/ix and $v       //= $1;
+	$mfc =~ m/$q VERSION_FROM $a (\S+ ) $q/ix and $vf      //= $1;
+	$mfc =~ m/$q     NAME     $a (\S+ ) $q/ix and $nm      //= $1;
+	$mfc =~ m/$q DISTNAME     $a (\S+ ) $q/ix and $release //= $1;
 	}
 
     $release //= $nm =~ s{-}{::}gr;
@@ -168,7 +168,7 @@ sub _read_cpanfile {
     $self;
     } # _read_cpanfile
 
-sub _read_MYMETA {
+sub _read_META {
     my ($self, $mmf) = @_;
     $mmf ||= "MYMETA.json";
 
@@ -193,7 +193,7 @@ sub _read_MYMETA {
 	}
     push @{$self->{want}} => sort grep { $self->{j}{db}{$_} } keys %{$self->{prereq}};
     $self;
-    } # _read_MYMETA
+    } # _read_META
 
 sub test {
     my $self = shift;
@@ -202,8 +202,9 @@ sub test {
     my $rel  = $self->{mf}{release} or return $self;
 
     $self->{j}       or $self->_read_cpansa;
-    @{$self->{want}} or $self->_read_cpanfile if $self->{deps};
-    @{$self->{want}} or $self->_read_MYMETA   if $self->{deps};
+    @{$self->{want}} or $self->_read_cpanfile           if $self->{deps};
+    @{$self->{want}} or $self->_read_META               if $self->{deps};
+    @{$self->{want}} or $self->_read_META ("META.json") if $self->{deps};
 
     $self->{j}{db}{$rel} and unshift @{$self->{want}} => $rel;
 
