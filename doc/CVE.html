@@ -1,0 +1,210 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:hmbrand@cpan.org" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Functions-and-methods">Functions and methods</a>
+        <ul>
+          <li><a href="#new">new</a>
+            <ul>
+              <li><a href="#verbose">verbose</a></li>
+              <li><a href="#deps">deps</a></li>
+              <li><a href="#minimum">minimum</a></li>
+              <li><a href="#cpansa">cpansa</a></li>
+              <li><a href="#make_pl">make_pl</a></li>
+              <li><a href="#cpanfile">cpanfile</a></li>
+              <li><a href="#want">want</a></li>
+            </ul>
+          </li>
+          <li><a href="#test">test</a></li>
+          <li><a href="#report">report</a></li>
+          <li><a href="#cve">cve</a>
+            <ul>
+              <li><a href="#release">release</a></li>
+              <li><a href="#cve1">cve</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<pre><code>Test::CVE - Test against known CVE&#39;s</code></pre>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>use Test::CVE;
+
+my $cve = Test::CVE-&gt;new (
+   verbose  =&gt; 0,
+   deps     =&gt; 1,
+   minimum  =&gt; 0,
+   cpansa   =&gt; &quot;https://hackeriet.github.io/cpansa-feed/cpansa.json&quot;,
+   make_pl  =&gt; &quot;Makefile.PL&quot;,
+   cpanfile =&gt; &quot;cpanfile&quot;,
+   want     =&gt; [],
+   );
+
+$cve-&gt;test;
+print $cve-&gt;report (width =&gt; $ENV{COLUMNS} || 80);
+my $csv = $cve-&gt;csv;</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Test::CVE provides functionality to test a release against known CVE&#39;s</p>
+
+<p>It enables checking the current release only or include its prereqs too.</p>
+
+<h2 id="Functions-and-methods">Functions and methods</h2>
+
+<h3 id="new">new</h3>
+
+<pre><code>my $cve = Test::CVE-&gt;new (
+   verbose  =&gt; 0,
+   deps     =&gt; 1,
+   minimum  =&gt; 0,
+   cpansa   =&gt; &quot;https://hackeriet.github.io/cpansa-feed/cpansa.json&quot;,
+   make_pl  =&gt; &quot;Makefile.PL&quot;,
+   cpanfile =&gt; &quot;cpanfile&quot;,
+   want     =&gt; [],
+   );</code></pre>
+
+<h4 id="verbose">verbose</h4>
+
+<p>Set verbosity level. This will report what files are opened and read and what modules are taken into account. Higher verbose will show more. Default = <code>0</code>.</p>
+
+<h4 id="deps">deps</h4>
+
+<p>Select if CVE&#39;s are also checked for direct dependencies. Default is true. If false, just check the module or release itself.</p>
+
+<h4 id="minimum">minimum</h4>
+
+<p>Report all CVE&#39;s regardless of what version is recommended in <code>cpanfile</code> or <code>MYMETA.json</code>. By default only CVE&#39;s newer than the recommended version per dependency are reported.</p>
+
+<h4 id="cpansa">cpansa</h4>
+
+<p>Pass the URL of the CPANSA database. The alternative is to pass the filename of a stored version of that database.</p>
+
+<h4 id="make_pl">make_pl</h4>
+
+<p>Pass an alternative location of <code>Makefile.PL</code>. Default is the one in the current directory.</p>
+
+<p>In version <code>0.01</code> <code>Build.PL</code> is not yet supported.</p>
+
+<h4 id="cpanfile">cpanfile</h4>
+
+<p>Pass an alternative location for <code>cpanfile</code>. Very useful when testing.</p>
+
+<h4 id="want">want</h4>
+
+<p>A list of extra prereqs.</p>
+
+<h3 id="test">test</h3>
+
+<p>Execute the test. Files are read as needed.</p>
+
+<h3 id="report">report</h3>
+
+<p>Report the test-results in plain text. This method prints the CVE&#39;s. If you want the results for further analysis, use <code>cve</code>.</p>
+
+<h3 id="cve">cve</h3>
+
+<p>Return a list of found CVE&#39;s per release. The format will be somewhat like</p>
+
+<pre><code>[ { release =&gt; &quot;Some-Module&quot;,
+    cve     =&gt; [
+      { av  =&gt; [ &quot;&lt;1.23&quot; ],
+        cid =&gt; &quot;CPANSA-Some-Module-2023-01&quot;,
+        cve =&gt; [ &quot;CVE-2023-1234&quot; ],
+        dsc =&gt; &quot;Removes all files in /tmp&quot;,
+        dte =&gt; &quot;2023-01-02&quot;,
+        sev =&gt; &quot;critical&quot;,
+        },
+      ...
+      ],
+    },
+  ...
+  ]</code></pre>
+
+<h4 id="release">release</h4>
+
+<p>The name of the release</p>
+
+<h4 id="cve1">cve</h4>
+
+<p>The list of found CVE&#39;s for this release that match the criteria</p>
+
+<dl>
+
+<dt id="av">av</dt>
+<dd>
+
+<p>All affected versions of the release</p>
+
+</dd>
+<dt id="cid">cid</dt>
+<dd>
+
+<p>The ID from the CPANSA database</p>
+
+</dd>
+<dt id="cve2">cve</dt>
+<dd>
+
+<p>The list of CVE tags for this item. This list can be empty.</p>
+
+</dd>
+<dt id="dsc">dsc</dt>
+<dd>
+
+<p>Description of the vulnerability</p>
+
+</dd>
+<dt id="dte">dte</dt>
+<dd>
+
+<p>Date for this CVE</p>
+
+</dd>
+<dt id="sev">sev</dt>
+<dd>
+
+<p>Severity. Most entries doe not have a severity</p>
+
+</dd>
+</dl>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>H.Merijn Brand <i>&lt;hmbrand@cpan.org&gt;</i></p>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<pre><code>Copyright (C) 2023-2023 H.Merijn Brand.  All rights reserved.</code></pre>
+
+<p>This library is free software; you can redistribute and/or modify it under the same terms as Perl itself.</p>
+
+
+</body>
+
+</html>
+
+
