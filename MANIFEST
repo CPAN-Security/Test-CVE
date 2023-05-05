@@ -1,6 +1,8 @@
 ChangeLog		Change history
 README			Docs
 MANIFEST		This file
+META.json		META
+META.yml		META
 cpanfile		Dependency list for cpan/cpanm
 CONTRIBUTING.md		Guide in how to contribute
 lib/Test/CVE.pm		Test CVE functionality

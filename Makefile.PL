@@ -7,32 +7,27 @@ require 5.014000;
 use ExtUtils::MakeMaker;
 
 my %wm = (
-    NAME         => "Test::CVE",
-    DISTNAME     => "Test-CVE",
-    ABSTRACT     => "Test current release against CVE's",
-    AUTHOR       => "H.Merijn Brand <hmbrand\@cpan.org>",
-    VERSION_FROM => "lib/Test/CVE.pm",
-    LICENSE      => "perl",
-    PREREQ_PM	 => { "version"		=> 0,
-		      "HTTP::Tiny"	=> 0,
-		      "Text::Wrap"	=> 0,
-		      "JSON::MaybeXS"	=> 0,
-		      },
-    clean        => { FILES => join " ", qw(
-			 CSV_XS.c.gcov
-			 CSV_XS.gcda
-			 CSV_XS.gcno
-			 CSV_XS.xs.gcov
-			 cover_db
-			 valgrind.log
-			 pod2htmd.tmp
-			 MYMETA.json
-			 MYMETA.yml
-			 )
-		      },
-
-    macro        => { TARFLAGS   => "--format=ustar -c -v -f",
-		      },
+    NAME		=> "Test::CVE",
+    DISTNAME		=> "Test-CVE",
+    ABSTRACT		=> "Test current release against CVE's",
+    AUTHOR		=> "H.Merijn Brand <hmbrand\@cpan.org>",
+    VERSION_FROM		=> "lib/Test/CVE.pm",
+    LICENSE		=> "perl",
+    PREREQ_PM		=> { "version"		=> 0,
+			     "HTTP::Tiny"	=> 0,
+			     "Text::Wrap"	=> 0,
+			     "JSON::MaybeXS"	=> 0,
+			     },
+    MIN_PERL_VERSION	=> "5.014",
+    clean		=> { FILES => join " ", qw(
+				 CVE.c.gcov CVE.gcda CVE.gcno
+				 MYMETA.json MYMETA.yml
+				 cover_db
+				 pod2htmd.tmp
+				 )
+			     },
+    macro		=> { TARFLAGS   => "--format=ustar -c -v -f",
+			     },
     );
 
 my $rv = WriteMakefile (%wm);
@@ -79,14 +74,7 @@ sub postamble {
 	'spellcheck:',
 	'	pod-spell-check --aspell --ispell',
 	'',
-	'checkmeta:	spellcheck ppport.h',
-	'	perl sandbox/genPPPort_h.pl',
-	'	perl sandbox/genMETA.pl -c',
-	'',
-	'fixmeta:	distmeta',
-	'	perl sandbox/genMETA.pl',
-	'',
-	'tgzdist:	checkmeta fixmeta $(DISTVNAME).tar.gz distcheck',
+	'tgzdist:	$(DISTVNAME).tar.gz distcheck',
 	'	-@mv -f $(DISTVNAME).tar.gz $(DISTVNAME).tgz',
 	'	-@cpants_lint.pl $(DISTVNAME).tgz',
 	'	-@rm -f Debian_CPANTS.txt',
