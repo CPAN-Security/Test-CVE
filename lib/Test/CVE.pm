@@ -179,6 +179,13 @@ sub _read_META {
     my $j = decode_json (<$fh>);
     close $fh;
 
+    unless ($self->{mf}) {
+	$self->{mf}{release} = $j->{name} =~ s{::}{-}gr;
+	$self->{mf}{version} = $j->{version};
+	$self->{mf}{name}    = $j->{name} =~ s{-}{::}gr;
+	$self->{prereq}{$self->{mf}{release}}{v}{$j->{version} // "-"} = "current";
+	}
+
     my $pr = $j->{prereqs} or return $self;
     foreach my $p (qw( configure build test runtime )) {
 	foreach my $t (qw( requires recommends suggests )) {
