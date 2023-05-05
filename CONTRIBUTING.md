@@ -1,9 +1,12 @@
 # General
 
 I am always open to improvements and suggestions.
-Use [issues](https://github.com/Tux/Test-CVE/issues)
+Use [issues](https://github.com/Perl-Toolchain-Gang/Test-CVE/issues)
 
 # Style
+
+Below is not carved in stone for this module, as it is meant to be
+a group effort.
 
 I will never accept pull request that do not strictly conform to my
 style, however you might hate it. You can read the reasoning behind
@@ -27,4 +30,5 @@ will do fine!
 # Requirements
 
 The minimum version required to use this module is stated in
-[Makefile.PL](./Makefile.PL)
+[Makefile.PL](./Makefile.PL), [META.json](./META.json) and
+[cpanfile](./cpanfile)
