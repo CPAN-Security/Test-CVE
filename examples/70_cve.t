@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# Eat our own dogfood
-
 use 5.014000;
 use warnings;
 

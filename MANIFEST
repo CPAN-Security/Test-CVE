@@ -11,3 +11,4 @@ t/10_base.t		Base tests (combine and parse only)
 t/12_options.t		Accessor methods
 scripts/cpan-cve.pl	CLI to Test::CVE
 files/cpanfile-SR	cpanfile from Spreadsheet::Read
+examples/70_cve.t	An example test file
