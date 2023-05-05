@@ -302,7 +302,7 @@ sub cve {
     foreach my $m (@{$self->{want}}) {
 	my $C = $self->{CVE}{$m} or next;
 	my @c = @{$C->{cve}}     or next;
-	push @cve => { release => $m, cve => [ @c ] };
+	push @cve => { release => $m, vsn => $C->{min}, cve => [ @c ] };
 	}
     @cve;
     } # cve
@@ -381,6 +381,7 @@ want the results for further analysis, use C<cve>.
 Return a list of found CVE's per release. The format will be somewhat like
 
  [ { release => "Some-Module",
+     vsn     => "0.45",
      cve     => [
        { av  => [ "<1.23" ],
          cid => "CPANSA-Some-Module-2023-01",
@@ -398,6 +399,10 @@ Return a list of found CVE's per release. The format will be somewhat like
 =head4 release
 
 The name of the release
+
+=head4 vsn
+
+The version that was checked
 
 =head4 cve
 
