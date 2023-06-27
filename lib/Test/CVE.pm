@@ -29,7 +29,7 @@ package Test::CVE;
 use 5.012000;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use version;
 use Carp;
@@ -447,6 +447,10 @@ Severity. Most entries doe not have a severity
 =head1 AUTHOR
 
 H.Merijn Brand F<E<lt>hmbrand@cpan.orgE<gt>>
+
+=head1 SEE ALSO
+
+L<Net::CVE>, L<Net::NVD>, L<Net::OSV>
 
 =head1 COPYRIGHT AND LICENSE
 

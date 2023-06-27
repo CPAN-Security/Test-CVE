@@ -141,6 +141,9 @@ STDIN(1)              User Contributed Perl Documentation             STDIN(1)
 [1mAUTHOR[0m
        H.Merijn Brand [4m<hmbrand@cpan.org>[0m
 
+[1mSEE ALSO[0m
+       Net::CVE, Net::NVD, Net::OSV
+
 [1mCOPYRIGHT AND LICENSE[0m
         Copyright (C) 2023-2023 H.Merijn Brand.  All rights reserved.
 
@@ -149,4 +152,4 @@ STDIN(1)              User Contributed Perl Documentation             STDIN(1)
 
 
 
-perl v5.36.0                      2023-05-05                          STDIN(1)
+perl v5.36.0                      2023-06-27                          STDIN(1)

@@ -145,6 +145,10 @@ The list of found CVE's for this release that match the criteria
 
 H.Merijn Brand `<hmbrand@cpan.org>`
 
+# SEE ALSO
+
+[Net::CVE](https://metacpan.org/pod/Net%3A%3ACVE), [Net::NVD](https://metacpan.org/pod/Net%3A%3ANVD), [Net::OSV](https://metacpan.org/pod/Net%3A%3AOSV)
+
 # COPYRIGHT AND LICENSE
 
     Copyright (C) 2023-2023 H.Merijn Brand.  All rights reserved.

@@ -1,7 +1,7 @@
 # General
 
 I am always open to improvements and suggestions.
-Use [issues](https://github.com/Perl-Toolchain-Gang/Test-CVE/issues)
+Use [issues](https://github.com/CPAN-Security/Test-CVE/issues)
 
 # Style
 
