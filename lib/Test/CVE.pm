@@ -20,6 +20,9 @@ package Test::CVE;
     want     => [],
     );
 
+ $cve->want ("Foo::Bar", "4.321");
+ $cve->want ("ExtUtils-MakeMaker");
+
  $cve->test;
  print $cve->report (width => $ENV{COLUMNS} || 80);
  my $csv = $cve->csv;
@@ -36,6 +39,7 @@ use Carp;
 use HTTP::Tiny;
 use Text::Wrap;
 use JSON::MaybeXS;
+use List::Util qw( first );
 
 # TODO:
 # NEW! https://fastapi.metacpan.org/cve/CPANSA-YAML-LibYAML-2012-1152
@@ -104,6 +108,8 @@ sub _read_MakefilePL {
     open my $fh, "<", $mf or croak "$mf: $!\n";
     my $mfc = do { local $/; <$fh> };
     close $fh;
+
+    $mfc or return $self;
 
     my ($release, $nm, $v, $vf);
     {	my $w = qr{[\s\r\n]*};
@@ -202,6 +208,28 @@ sub _read_META {
     $self;
     } # _read_META
 
+sub set_meta {
+    my ($self, $m, $v) = @_;
+    $self->{mf} = {
+	name    => $m,
+	release => $m =~ s{::}{-}gr,
+	version => $v // "-",
+	};
+    $self;
+    } # set_meta
+
+sub want {
+    my ($t, $self, $m, $v) = ("requires", @_);
+    $m =~ s/::/-/g;
+    unless (first { $_ eq $m } @{$self->{want}}) {
+	$self->{prereq}{$m}{v}{$v // ""} = $t;
+	$self->{prereq}{$m}{$t}          = $v;
+	$self->{j}         or $self->_read_cpansa;
+	$self->{j}{db}{$m} and push @{$self->{want}} => $m;
+	}
+    $self;
+    } # want
+
 sub test {
     my $self = shift;
 
@@ -281,7 +309,7 @@ sub report {
     @_ % 2 and croak "Uneven number of arguments";
     my %args = @_;
 
-    local $Text::Wrap::columns = $args{width} || $self->{width};
+    local $Text::Wrap::columns = ($args{width} || $self->{width}) - 4;
 
     foreach my $m (@{$self->{want}}) {
 	my $C = $self->{CVE}{$m} or next;
@@ -373,7 +401,25 @@ Pass an alternative location for C<cpanfile>. Very useful when testing.
 
 =head4 want
 
-A list of extra prereqs.
+A list of extra prereqs. When you know in advance, pass the list in this
+attribute. You can also add them to the object with the method later. This
+attribute does not support versions, the method does.
+
+=head3 want
+
+ my $cve = Test::CVE->new ();
+ $cve->require ("Foo::Bar");
+ $cve->require ("Baz-Fumble", "4.321");
+
+Add a dependency to the list. Only adds the dependency if known CVE's exist.
+
+=head3 set_meta
+
+ $cve->set_meta ("Fooble.pl");
+ $cve->set_meta ("script.pl", "0.01");
+
+Force set distribution information, preventing reading C<Makefile.PL> and/or
+C<cpanfile>.
 
 =head3 test
 
