@@ -55,7 +55,7 @@
 .\" ========================================================================
 .\"
 .IX Title "STDIN 1"
-.TH STDIN 1 2023-06-27 "perl v5.36.0" "User Contributed Perl Documentation"
+.TH STDIN 1 2023-10-06 "perl v5.38.0" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -73,11 +73,14 @@
 \&    verbose  => 0,
 \&    deps     => 1,
 \&    minimum  => 0,
-\&    cpansa   => "https://hackeriet.github.io/cpansa\-feed/cpansa.json",
+\&    cpansa   => "https://perl\-toolchain\-gang.github.io/cpansa\-feed/cpansa.json",
 \&    make_pl  => "Makefile.PL",
 \&    cpanfile => "cpanfile",
 \&    want     => [],
 \&    );
+\&
+\& $cve\->want ("Foo::Bar", "4.321");
+\& $cve\->want ("ExtUtils\-MakeMaker");
 \&
 \& $cve\->test;
 \& print $cve\->report (width => $ENV{COLUMNS} || 80);
@@ -98,7 +101,7 @@ It enables checking the current release only or include its prereqs too.
 \&    verbose  => 0,
 \&    deps     => 1,
 \&    minimum  => 0,
-\&    cpansa   => "https://hackeriet.github.io/cpansa\-feed/cpansa.json",
+\&    cpansa   => "https://perl\-toolchain\-gang.github.io/cpansa\-feed/cpansa.json",
 \&    make_pl  => "Makefile.PL",
 \&    cpanfile => "cpanfile",
 \&    want     => [],
@@ -146,7 +149,31 @@ Pass an alternative location for \f(CW\*(C`cpanfile\*(C'\fR. Very useful when te
 want
 .IX Subsection "want"
 .PP
-A list of extra prereqs.
+A list of extra prereqs. When you know in advance, pass the list in this
+attribute. You can also add them to the object with the method later. This
+attribute does not support versions, the method does.
+.PP
+\fIwant\fR
+.IX Subsection "want"
+.PP
+.Vb 3
+\& my $cve = Test::CVE\->new ();
+\& $cve\->require ("Foo::Bar");
+\& $cve\->require ("Baz\-Fumble", "4.321");
+.Ve
+.PP
+Add a dependency to the list. Only adds the dependency if known CVE's exist.
+.PP
+\fIset_meta\fR
+.IX Subsection "set_meta"
+.PP
+.Vb 2
+\& $cve\->set_meta ("Fooble.pl");
+\& $cve\->set_meta ("script.pl", "0.01");
+.Ve
+.PP
+Force set distribution information, preventing reading \f(CW\*(C`Makefile.PL\*(C'\fR and/or
+\&\f(CW\*(C`cpanfile\*(C'\fR.
 .PP
 \fItest\fR
 .IX Subsection "test"

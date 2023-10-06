@@ -29,6 +29,8 @@
               <li><a href="#want">want</a></li>
             </ul>
           </li>
+          <li><a href="#want1">want</a></li>
+          <li><a href="#set_meta">set_meta</a></li>
           <li><a href="#test">test</a></li>
           <li><a href="#report">report</a></li>
           <li><a href="#cve">cve</a>
@@ -59,11 +61,14 @@ my $cve = Test::CVE-&gt;new (
    verbose  =&gt; 0,
    deps     =&gt; 1,
    minimum  =&gt; 0,
-   cpansa   =&gt; &quot;https://hackeriet.github.io/cpansa-feed/cpansa.json&quot;,
+   cpansa   =&gt; &quot;https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json&quot;,
    make_pl  =&gt; &quot;Makefile.PL&quot;,
    cpanfile =&gt; &quot;cpanfile&quot;,
    want     =&gt; [],
    );
+
+$cve-&gt;want (&quot;Foo::Bar&quot;, &quot;4.321&quot;);
+$cve-&gt;want (&quot;ExtUtils-MakeMaker&quot;);
 
 $cve-&gt;test;
 print $cve-&gt;report (width =&gt; $ENV{COLUMNS} || 80);
@@ -83,7 +88,7 @@ my $csv = $cve-&gt;csv;</code></pre>
    verbose  =&gt; 0,
    deps     =&gt; 1,
    minimum  =&gt; 0,
-   cpansa   =&gt; &quot;https://hackeriet.github.io/cpansa-feed/cpansa.json&quot;,
+   cpansa   =&gt; &quot;https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json&quot;,
    make_pl  =&gt; &quot;Makefile.PL&quot;,
    cpanfile =&gt; &quot;cpanfile&quot;,
    want     =&gt; [],
@@ -117,7 +122,22 @@ my $csv = $cve-&gt;csv;</code></pre>
 
 <h4 id="want">want</h4>
 
-<p>A list of extra prereqs.</p>
+<p>A list of extra prereqs. When you know in advance, pass the list in this attribute. You can also add them to the object with the method later. This attribute does not support versions, the method does.</p>
+
+<h3 id="want1">want</h3>
+
+<pre><code>my $cve = Test::CVE-&gt;new ();
+$cve-&gt;require (&quot;Foo::Bar&quot;);
+$cve-&gt;require (&quot;Baz-Fumble&quot;, &quot;4.321&quot;);</code></pre>
+
+<p>Add a dependency to the list. Only adds the dependency if known CVE&#39;s exist.</p>
+
+<h3 id="set_meta">set_meta</h3>
+
+<pre><code>$cve-&gt;set_meta (&quot;Fooble.pl&quot;);
+$cve-&gt;set_meta (&quot;script.pl&quot;, &quot;0.01&quot;);</code></pre>
+
+<p>Force set distribution information, preventing reading <code>Makefile.PL</code> and/or <code>cpanfile</code>.</p>
 
 <h3 id="test">test</h3>
 

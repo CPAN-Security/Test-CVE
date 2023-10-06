@@ -10,11 +10,14 @@
        verbose  => 0,
        deps     => 1,
        minimum  => 0,
-       cpansa   => "https://hackeriet.github.io/cpansa-feed/cpansa.json",
+       cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
        make_pl  => "Makefile.PL",
        cpanfile => "cpanfile",
        want     => [],
        );
+
+    $cve->want ("Foo::Bar", "4.321");
+    $cve->want ("ExtUtils-MakeMaker");
 
     $cve->test;
     print $cve->report (width => $ENV{COLUMNS} || 80);
@@ -34,7 +37,7 @@ It enables checking the current release only or include its prereqs too.
        verbose  => 0,
        deps     => 1,
        minimum  => 0,
-       cpansa   => "https://hackeriet.github.io/cpansa-feed/cpansa.json",
+       cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
        make_pl  => "Makefile.PL",
        cpanfile => "cpanfile",
        want     => [],
@@ -74,7 +77,25 @@ Pass an alternative location for `cpanfile`. Very useful when testing.
 
 #### want
 
-A list of extra prereqs.
+A list of extra prereqs. When you know in advance, pass the list in this
+attribute. You can also add them to the object with the method later. This
+attribute does not support versions, the method does.
+
+### want
+
+    my $cve = Test::CVE->new ();
+    $cve->require ("Foo::Bar");
+    $cve->require ("Baz-Fumble", "4.321");
+
+Add a dependency to the list. Only adds the dependency if known CVE's exist.
+
+### set\_meta
+
+    $cve->set_meta ("Fooble.pl");
+    $cve->set_meta ("script.pl", "0.01");
+
+Force set distribution information, preventing reading `Makefile.PL` and/or
+`cpanfile`.
 
 ### test
 

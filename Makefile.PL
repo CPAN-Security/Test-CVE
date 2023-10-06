@@ -91,7 +91,7 @@ sub postamble {
 	'doc/CVE.3:		lib/Test/CVE.pm',
 	'	pod2man       < $? > $@',
 	'doc/CVE.man:		doc/CVE.3',
-	'	nroff -mandoc < $? > $@',
+	'	nroff2man     < $? > $@',
 	'',
 	$min_vsn;
     } # postamble
