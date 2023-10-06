@@ -14,7 +14,7 @@ package Test::CVE;
     verbose  => 0,
     deps     => 1,
     minimum  => 0,
-    cpansa   => "https://hackeriet.github.io/cpansa-feed/cpansa.json",
+    cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
     make_pl  => "Makefile.PL",
     cpanfile => "cpanfile",
     want     => [],
@@ -49,7 +49,7 @@ sub new {
     my $class = shift;
     @_ % 2 and croak "Uneven number of arguments";
     my %self  = @_;
-    $self{cpansa}   ||= "https://hackeriet.github.io/cpansa-feed/cpansa.json";
+    $self{cpansa}   ||= "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json";
     $self{deps}     //= 1;
     $self{minimum}  //= 0;
     $self{verbose}  //= 0;
@@ -361,7 +361,7 @@ It enables checking the current release only or include its prereqs too.
     verbose  => 0,
     deps     => 1,
     minimum  => 0,
-    cpansa   => "https://hackeriet.github.io/cpansa-feed/cpansa.json",
+    cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
     make_pl  => "Makefile.PL",
     cpanfile => "cpanfile",
     want     => [],
