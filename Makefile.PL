@@ -11,7 +11,7 @@ my %wm = (
     DISTNAME		=> "Test-CVE",
     ABSTRACT		=> "Test current release against CVE's",
     AUTHOR		=> "H.Merijn Brand <hmbrand\@cpan.org>",
-    VERSION_FROM		=> "lib/Test/CVE.pm",
+    VERSION_FROM	=> "lib/Test/CVE.pm",
     LICENSE		=> "perl",
     PREREQ_PM		=> { "version"		=> 0,
 			     "HTTP::Tiny"	=> 0,

@@ -1,6 +1,6 @@
 { "abstract" : "Test current release against CVE's",
   "name" : "Test-CVE",
-  "version" : "0.01",
+  "version" : "0.03",
   "author" : [
     "H.Merijn Brand <hmbrand@cpan.org>"
     ],

@@ -32,7 +32,7 @@ package Test::CVE;
 use 5.012000;
 use warnings;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 use version;
 use Carp;
