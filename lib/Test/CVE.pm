@@ -347,13 +347,6 @@ sub cve {
 
 __END__
 
-=head1 DESCRIPTION
-
-Test::CVE provides functionality to test a (CPAN)release or a single (perl)
-script against known CVE's
-
-It enables checking the current release only or include its prereqs too.
-
 =head1 INCENTIVE
 
 On the Perl Toolchain Summit 2023, the CPAN Security Working Group (CPAN-SEC)
@@ -371,6 +364,13 @@ levels: C<required>, C<recommended>, and C<suggested>.
 
 The functionality explicitly limits to passive analysis: the is no active
 scanning of source code to find security vulnerabilities.
+
+=head1 DESCRIPTION
+
+Test::CVE provides functionality to test a (CPAN)release or a single (perl)
+script against known CVE's
+
+It enables checking the current release only or include its prereqs too.
 
 =head2 Functions and methods
 
