@@ -349,9 +349,28 @@ __END__
 
 =head1 DESCRIPTION
 
-Test::CVE provides functionality to test a release against known CVE's
+Test::CVE provides functionality to test a (CPAN)release or a single (perl)
+script against known CVE's
 
 It enables checking the current release only or include its prereqs too.
+
+=head1 INCENTIVE
+
+On the Perl Toolchain Summit 2023, the CPAN Security Working Group (CPAN-SEC)
+was established to receive and handle reports of undisclosed vulnerabilities
+for CPAN releases and to assist the community in dealing with those.
+
+The resources available enabled passive checks to existing releases and single
+files against the database with known vulnerabilities.
+
+The goal of this module is to be able to check if known vulnerabilities exist
+before the release would be uploaded to CPAN.
+
+The analysis is based on declarations and/or actual use and supports three
+levels: C<required>, C<recommended>, and C<suggested>.
+
+The functionality explicitly limits to passive analysis: the is no active
+scanning of source code to find security vulnerabilities.
 
 =head2 Functions and methods
 
