@@ -1,7 +1,9 @@
-0.03	- 2023-10-07, H.Merijn Brand
+0.03	- 2023-10-10, H.Merijn Brand
     * Add ->want & ->set_meta
     * Support test on a single script in cpan-cve.pl
     * Use toolchain-gang URL
+    * Test for cpanfile
+    * Added INCENTIVE
     * Release
 
 0.02	- 2023-06-27, H.Merijn Brand

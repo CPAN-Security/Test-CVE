@@ -360,7 +360,8 @@ The goal of this module is to be able to check if known vulnerabilities exist
 before the release would be uploaded to CPAN.
 
 The analysis is based on declarations and/or actual use and supports three
-levels: C<required>, C<recommended>, and C<suggested>.
+levels: C<requires>, C<recommends>, and C<suggests>. C<suggests> is unused in
+giving advice.
 
 The functionality explicitly limits to passive analysis: the is no active
 scanning of source code to find security vulnerabilities.
