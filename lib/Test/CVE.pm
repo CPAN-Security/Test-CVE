@@ -55,7 +55,7 @@ sub new {
     $self{verbose}  //= 0;
     $self{width}    //= $ENV{COLUMNS} // 80;
     $self{want}     //= [];
-    $self{make_pl}  ||= "Makefile.PL",
+    $self{make_pl}  ||= "Makefile.PL";
     $self{cpanfile} ||= "cpanfile";
     $self{CVE}        = {};
     bless \%self => $class;
@@ -425,7 +425,7 @@ A list of extra prereqs. When you know in advance, pass the list in this
 attribute. You can also add them to the object with the method later. This
 attribute does not support versions, the method does.
 
-=head3 want
+=head3 require
 
  my $cve = Test::CVE->new ();
  $cve->require ("Foo::Bar");
