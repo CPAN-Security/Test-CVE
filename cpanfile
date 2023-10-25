@@ -10,6 +10,7 @@ recommends "IO::Socket::SSL"          => "1.35";
 suggests   "HTTP::Tiny"               => "0.088";
 suggests   "IO::Socket::SSL"          => "2.083";
 suggests   "JSON::MaybeXS"            => "1.004005";
+suggests   "Perl::Tidy"               => "20230912";
 suggests   "version"                  => "0.9929";
 
 on "configure" => sub {

@@ -8,9 +8,11 @@ Use [issues](https://github.com/CPAN-Security/Test-CVE/issues)
 Below is not carved in stone for this module, as it is meant to be
 a group effort.
 
-I will never accept pull request that do not strictly conform to my
+I will not accept pull request that do not strictly conform to my
 style, however you might hate it. You can read the reasoning behind
-my [preferences](https://tux.nl/style.html).
+my [preferences](https://tux.nl/style.html). However, I am likely
+to accept contributions that add real value or improvements, after
+which I will fix the style issues myself.
 
 I really do not care about mixed spaces and tabs in (leading) whitespace
 

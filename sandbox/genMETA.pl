@@ -63,6 +63,7 @@ suggests:
     HTTP::Tiny:          0.088
     IO::Socket::SSL:     2.083
     JSON::MaybeXS:       1.004005
+    Perl::Tidy:          20230912
 configure_requires:
     ExtUtils::MakeMaker: 0
 configure_recommends:
