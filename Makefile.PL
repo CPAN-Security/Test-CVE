@@ -47,11 +47,15 @@ my $rv = WriteMakefile (%wm);
 
     require Config::Tiny;
     my $cnf = Config::Tiny->read ("$ENV{HOME}/.perlcriticrc");
-    for ("ControlStructures::ProhibitPostfixControls",	# postfix if in diag
+    for ("BuiltinFunctions::ProhibitBooleanGrep",
+	 "BuiltinFunctions::ProhibitStringyEval",	# version check
+	 "Community::EmptyReturn",
+	 "Community::WhileDiamondDefaultAssignment",
+	 "ControlStructures::ProhibitPostfixControls",	# postfix if in diag
+	 "Documentation::ProhibitDuplicateHeadings",	# 3:cve / 4:cve
+	 "ErrorHandling::RequireCarping",		# for autodie
          "Freenode::PackageMatchesFilename",		# XS
 	 "Subroutines::ProhibitBuiltinHomonyms",	# eof, say
-	 "ErrorHandling::RequireCarping",		# for autodie
-	 "BuiltinFunctions::ProhibitBooleanGrep",
 	 "Variables::RequireLocalizedPunctuationVars",	# *_, %_
 	 ) {
 	delete $cnf->{$_};
