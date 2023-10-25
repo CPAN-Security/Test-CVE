@@ -34,3 +34,10 @@ will do fine!
 The minimum version required to use this module is stated in
 [Makefile.PL](./Makefile.PL), [META.json](./META.json) and
 [cpanfile](./cpanfile)
+
+# Testing
+
+If you want to do the extensive testing like I do, please refer to
+[Release::Checklist](https://metacpan.org/module/Release::Checklist)
+which explains all the modules used when executing `make tgzdist`.
+Lots of custom stuff.
