@@ -14,6 +14,7 @@
 <ul id="index">
   <li><a href="#NAME">NAME</a></li>
   <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#INCENTIVE">INCENTIVE</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a>
     <ul>
       <li><a href="#Functions-and-methods">Functions and methods</a>
@@ -29,7 +30,7 @@
               <li><a href="#want">want</a></li>
             </ul>
           </li>
-          <li><a href="#want1">want</a></li>
+          <li><a href="#require">require</a></li>
           <li><a href="#set_meta">set_meta</a></li>
           <li><a href="#test">test</a></li>
           <li><a href="#report">report</a></li>
@@ -74,9 +75,21 @@ $cve-&gt;test;
 print $cve-&gt;report (width =&gt; $ENV{COLUMNS} || 80);
 my $csv = $cve-&gt;csv;</code></pre>
 
+<h1 id="INCENTIVE">INCENTIVE</h1>
+
+<p>On the Perl Toolchain Summit 2023, the CPAN Security Working Group (CPAN-SEC) was established to receive and handle reports of undisclosed vulnerabilities for CPAN releases and to assist the community in dealing with those.</p>
+
+<p>The resources available enabled passive checks to existing releases and single files against the database with known vulnerabilities.</p>
+
+<p>The goal of this module is to be able to check if known vulnerabilities exist before the release would be uploaded to CPAN.</p>
+
+<p>The analysis is based on declarations and/or actual use and supports three levels: <code>requires</code>, <code>recommends</code>, and <code>suggests</code>. <code>suggests</code> is unused in giving advice.</p>
+
+<p>The functionality explicitly limits to passive analysis: the is no active scanning of source code to find security vulnerabilities.</p>
+
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>Test::CVE provides functionality to test a release against known CVE&#39;s</p>
+<p>Test::CVE provides functionality to test a (CPAN)release or a single (perl) script against known CVE&#39;s</p>
 
 <p>It enables checking the current release only or include its prereqs too.</p>
 
@@ -124,7 +137,7 @@ my $csv = $cve-&gt;csv;</code></pre>
 
 <p>A list of extra prereqs. When you know in advance, pass the list in this attribute. You can also add them to the object with the method later. This attribute does not support versions, the method does.</p>
 
-<h3 id="want1">want</h3>
+<h3 id="require">require</h3>
 
 <pre><code>my $cve = Test::CVE-&gt;new ();
 $cve-&gt;require (&quot;Foo::Bar&quot;);

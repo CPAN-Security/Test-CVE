@@ -55,7 +55,7 @@
 .\" ========================================================================
 .\"
 .IX Title "STDIN 1"
-.TH STDIN 1 2023-10-07 "perl v5.38.0" "User Contributed Perl Documentation"
+.TH STDIN 1 2023-11-27 "perl v5.38.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -86,9 +86,28 @@
 \& print $cve\->report (width => $ENV{COLUMNS} || 80);
 \& my $csv = $cve\->csv;
 .Ve
+.SH INCENTIVE
+.IX Header "INCENTIVE"
+On the Perl Toolchain Summit 2023, the CPAN Security Working Group (CPAN-SEC)
+was established to receive and handle reports of undisclosed vulnerabilities
+for CPAN releases and to assist the community in dealing with those.
+.PP
+The resources available enabled passive checks to existing releases and single
+files against the database with known vulnerabilities.
+.PP
+The goal of this module is to be able to check if known vulnerabilities exist
+before the release would be uploaded to CPAN.
+.PP
+The analysis is based on declarations and/or actual use and supports three
+levels: \f(CW\*(C`requires\*(C'\fR, \f(CW\*(C`recommends\*(C'\fR, and \f(CW\*(C`suggests\*(C'\fR. \f(CW\*(C`suggests\*(C'\fR is unused in
+giving advice.
+.PP
+The functionality explicitly limits to passive analysis: the is no active
+scanning of source code to find security vulnerabilities.
 .SH DESCRIPTION
 .IX Header "DESCRIPTION"
-Test::CVE provides functionality to test a release against known CVE's
+Test::CVE provides functionality to test a (CPAN)release or a single (perl)
+script against known CVE's
 .PP
 It enables checking the current release only or include its prereqs too.
 .SS "Functions and methods"
@@ -153,8 +172,8 @@ A list of extra prereqs. When you know in advance, pass the list in this
 attribute. You can also add them to the object with the method later. This
 attribute does not support versions, the method does.
 .PP
-\fIwant\fR
-.IX Subsection "want"
+\fIrequire\fR
+.IX Subsection "require"
 .PP
 .Vb 3
 \& my $cve = Test::CVE\->new ();

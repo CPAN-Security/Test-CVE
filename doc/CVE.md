@@ -23,9 +23,29 @@
     print $cve->report (width => $ENV{COLUMNS} || 80);
     my $csv = $cve->csv;
 
+# INCENTIVE
+
+On the Perl Toolchain Summit 2023, the CPAN Security Working Group (CPAN-SEC)
+was established to receive and handle reports of undisclosed vulnerabilities
+for CPAN releases and to assist the community in dealing with those.
+
+The resources available enabled passive checks to existing releases and single
+files against the database with known vulnerabilities.
+
+The goal of this module is to be able to check if known vulnerabilities exist
+before the release would be uploaded to CPAN.
+
+The analysis is based on declarations and/or actual use and supports three
+levels: `requires`, `recommends`, and `suggests`. `suggests` is unused in
+giving advice.
+
+The functionality explicitly limits to passive analysis: the is no active
+scanning of source code to find security vulnerabilities.
+
 # DESCRIPTION
 
-Test::CVE provides functionality to test a release against known CVE's
+Test::CVE provides functionality to test a (CPAN)release or a single (perl)
+script against known CVE's
 
 It enables checking the current release only or include its prereqs too.
 
@@ -81,7 +101,7 @@ A list of extra prereqs. When you know in advance, pass the list in this
 attribute. You can also add them to the object with the method later. This
 attribute does not support versions, the method does.
 
-### want
+### require
 
     my $cve = Test::CVE->new ();
     $cve->require ("Foo::Bar");

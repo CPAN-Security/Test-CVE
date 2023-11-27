@@ -6,6 +6,7 @@
 \.gcda$
 \.gcno$
 \.releaserc
+\.perltidyrc
 \.exrc$
 ^blib/
 ^cover_db/

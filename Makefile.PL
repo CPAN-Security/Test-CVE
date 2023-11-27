@@ -28,16 +28,16 @@ my %wm = (
 			     },
     macro		=> { TARFLAGS   => "--format=ustar -c -v -f",
 			     },
-	META_MERGE => {
-	    "meta-spec" => { version => 2 },
-		resources => {
-			repository => {
-				"type" => "git",
-				"url"  => "https://github.com/CPAN-Security/Test-CVE.git",
-				"web"  => "https://github.com/CPAN-Security/Test-CVE",
-				},
-			},
+    META_MERGE		=> {
+	"meta-spec"	=> { version => 2 },
+	"resources"	=> {
+	    repository	=> {
+		"type"	=> "git",
+		"url"	=> "https://github.com/CPAN-Security/Test-CVE.git",
+		"web"	=> "https://github.com/CPAN-Security/Test-CVE",
 		},
+	    },
+	},
     );
 
 my $rv = WriteMakefile (%wm);
