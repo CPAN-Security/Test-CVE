@@ -14,7 +14,7 @@ package Test::CVE;
     verbose  => 0,
     deps     => 1,
     minimum  => 0,
-    cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
+    cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
     make_pl  => "Makefile.PL",
     cpanfile => "cpanfile",
     want     => [],
@@ -32,7 +32,7 @@ package Test::CVE;
 use 5.012000;
 use warnings;
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 use version;
 use Carp;
@@ -94,7 +94,16 @@ sub _read_cpansa {
 	$r->{success} or die "$src: $@\n";
 
 	$self->{verbose} > 1 and warn "Got it. Decoding\n";
-	$self->{j}{db} = decode_json ($r->{content});
+	if (my $c = $r->{content}) {
+	    # Skip warning part
+	    # CPANSA-perl-2023-47038 has more than 1 range bundled together in '>=5.30.0,<5.34.3,>=5.36.0,<5.36.3,>=5.38.0,<5.38.2'
+	    # {"Alien-PCRE2":[{"affected_versions":["<0.016000"],"cpansa_id":"CPANSA-Alien-PCRE2-2019-20454","cves":["CVE-2019-20454"],"description":"An out-
+	    $c =~ s/^\s*([^{]+?)[\s\r\n]*\{/{/s and warn "$1\n";
+	    $self->{j}{db} = decode_json ($c);
+	    }
+	else {
+	    $self->{j}{db} = undef;
+	    }
 	}
     $self->{j}{mod} = [ sort keys %{$self->{j}{db} // {}} ];
     $self;

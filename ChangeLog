@@ -1,3 +1,6 @@
+0.04	- 2023-12-02, H.Merijn Brand
+    * Strip WARNINg if it prefixes the JSON data
+
 0.03	- 2023-11-27, H.Merijn Brand
     * Add ->want & ->set_meta
     * Support test on a single script in cpan-cve.pl
