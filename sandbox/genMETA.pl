@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-use strict;
+use 5.014000;
 use warnings;
 
 use Getopt::Long qw(:config bundling nopermute);
@@ -61,7 +61,7 @@ recommends:
 suggests:
     version:             0.9929
     HTTP::Tiny:          0.088
-    IO::Socket::SSL:     2.083
+    IO::Socket::SSL:     2.084
     JSON::MaybeXS:       1.004005
     Perl::Tidy:          20230912
 configure_requires:
@@ -73,7 +73,7 @@ configure_suggests:
 test_requires:
     Test::More:          0
 test_suggests:
-    Test::More:          1.302195
+    Test::More:          1.302198
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/CPAN-Security/Test-CVE

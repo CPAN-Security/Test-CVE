@@ -8,7 +8,7 @@ recommends "HTTP::Tiny"               => "0.059";
 recommends "IO::Socket::SSL"          => "1.35";
 
 suggests   "HTTP::Tiny"               => "0.088";
-suggests   "IO::Socket::SSL"          => "2.083";
+suggests   "IO::Socket::SSL"          => "2.084";
 suggests   "JSON::MaybeXS"            => "1.004005";
 suggests   "Perl::Tidy"               => "20230912";
 suggests   "version"                  => "0.9929";
@@ -24,5 +24,5 @@ on "configure" => sub {
 on "test" => sub {
     requires   "Test::More";
 
-    suggests   "Test::More"               => "1.302195";
+    suggests   "Test::More"               => "1.302198";
     };
