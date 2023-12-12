@@ -3,7 +3,7 @@
 use 5.014002;
 use warnings;
 
-our $VERSION = "0.07 - 20231204";
+our $VERSION = "0.08 - 20231212";
 our $CMD = $0 =~ s{.*/}{}r;
 
 sub usage {
@@ -36,6 +36,7 @@ my $cve = Test::CVE->new (
     deps    => $opt_d,
     minimum => $opt_m,
     cpansa  => $opt_j,
+    verbose => $opt_v,
     );
 
 # NEW! https://fastapi.metacpan.org/cve/CPANSA-YAML-LibYAML-2012-1152
