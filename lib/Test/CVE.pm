@@ -282,16 +282,18 @@ sub test {
 		"#$m#" =~ m/$p/ and next;
 		}
 	    if (@vsn) {
-		$self->{verbose} > 2 and warn "CMP: $m-$cv\n";
+		$self->{verbose} > 2 and warn "CMP<: $m-$cv\n";
+		$self->{verbose} > 4 and warn "VSN : (@vsn)\n";
+		# >=5.30.0,<5.34.3,>=5.36.0,<5.36.3,>=5.38.0,<5.38.2
 		my $cmp = join " or " =>
-		    map { s/^=(?=[^=<>])/== /r	# = => ==
-		       =~ s/\s*([=<>]+)\s*/$1 version->parse ("/gr
+		    map { s/\s*,\s*/") && XV /gr
 		       =~ s/^/XV /r
-		       =~ s/\s*,\s*/") && XV /r
+		       =~ s/^=(?=[^=<>])/== /r	# = => ==
+		       =~ s/\s*([=<>]+)\s*/$1 version->parse ("/gr
 		       =~ s/$/")/r
 		       =~ s/\bXV\b/version->parse ("$cv")/gr
 		       } @vsn;
-		$self->{verbose} > 2 and warn "CMP: $cmp\n";
+		$self->{verbose} > 2 and warn "CMP>: $cmp\n";
 		eval "$cmp ? 0 : 1" and next;
 		$self->{verbose} > 3 and warn "TAKE!\n";
 		}
