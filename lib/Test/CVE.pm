@@ -123,11 +123,14 @@ sub _read_MakefilePL {
     $mfc or return $self;
 
     my ($release, $nm, $v, $vf);
-    foreach my $mfx (split m/[;,]\s*\r*\n/ => $mfc) {
+    foreach my $mfx (grep { m/=>/ }
+		     map  { split m/\s*[;(){}]\s*/ }
+		     map  { split m/\s*,(?!\s*=>)/ }
+			    split m/[,;]\s*\r*\n/ => $mfc) {
 	$mfx =~ s/[\s\r\n]+/ /g;
 	$mfx =~ s/^\s+//;
 	$mfx =~ s/^(['"])(.*?)\1/$2/;	# Unquote key
-	my $a = qr{\s* => \s* (?|"([^""]*)"|'([^'']*)'|([-\w.]+))}x;
+	my $a = qr{\s* (?:,\s*)? => \s* (?|"([^""]*)"|'([^'']*)'|([-\w.]+))}x;
 	$mfx =~ m/^ VERSION      $a /ix and $v       //= $1;
 	$mfx =~ m/^ VERSION_FROM $a /ix and $vf      //= $1;
 	$mfx =~ m/^     NAME     $a /ix and $nm      //= $1;
