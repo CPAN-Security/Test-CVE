@@ -1,6 +1,7 @@
-0.04	- 2023-12-07, H.Merijn Brand
+0.04	- 2023-12-12, H.Merijn Brand
     * Strip WARNING if it prefixes the JSON data
     * Opt to install cpan-cve.pl (issue #1)
+    * Pass verbosity from script to parser
 
 0.03	- 2023-11-27, H.Merijn Brand
     * Add ->want & ->set_meta

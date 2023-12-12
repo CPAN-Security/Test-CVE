@@ -29,7 +29,7 @@ package Test::CVE;
 
 =cut
 
-use 5.012000;
+use 5.014000;
 use warnings;
 
 our $VERSION = "0.04";
