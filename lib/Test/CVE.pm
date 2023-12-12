@@ -121,13 +121,15 @@ sub _read_MakefilePL {
     $mfc or return $self;
 
     my ($release, $nm, $v, $vf);
-    {	my $w = qr{[\s\r\n]*};
-	my $q = qr{(?:["']|\b)}; # '"
-	my $a = qr{$q $w => $w $q}x;
-	$mfc =~ m/$q VERSION      $a (\S+?) $q/ix and $v       //= $1;
-	$mfc =~ m/$q VERSION_FROM $a (\S+ ) $q/ix and $vf      //= $1;
-	$mfc =~ m/$q     NAME     $a (\S+ ) $q/ix and $nm      //= $1;
-	$mfc =~ m/$q DISTNAME     $a (\S+ ) $q/ix and $release //= $1;
+    foreach my $mfx (split m/[;,]\s*\r*\n/ => $mfc) {
+	$mfx =~ s/[\s\r\n]+/ /g;
+	$mfx =~ s/^\s+//;
+	$mfx =~ s/^(['"])(.*?)\1/$2/;	# Unquote key
+	my $a = qr{\s* => \s* (?|"([^""]*)"|'([^'']*)'|([-\w.]+))}x;
+	$mfx =~ m/^ VERSION      $a /ix and $v       //= $1;
+	$mfx =~ m/^ VERSION_FROM $a /ix and $vf      //= $1;
+	$mfx =~ m/^     NAME     $a /ix and $nm      //= $1;
+	$mfx =~ m/^ DISTNAME     $a /ix and $release //= $1;
 	}
 
     $release //= $nm =~ s{-}{::}gr;
