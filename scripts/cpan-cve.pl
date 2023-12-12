@@ -12,9 +12,10 @@ sub usage {
     say "    -d    --deps         Report on current deps too";
     say "    -m    --minimum      Report besed on minimum (default recommended)";
     say "    -j F  --json=F       Use downloaded JSON instead of fetching";
+    say "    -p    --perl         Report CVE's on required perl (default OFF)";
     say "    -v[#] --verbose[=#]  Set verbosity level";
     say "";
-    say "For CVE's in the perl core, please use CPAN::Audit";
+    say "For CVE's in the perl core, please use --perl and/or CPAN::Audit";
     say "Documentation should still be written";
     exit $err;
     } # usage
@@ -29,11 +30,14 @@ GetOptions (
     "m|minimum!"	=> \ my $opt_m,
     "j|json=s"		=> \ my $opt_j,
 
+    "p|perl!"		=> \ my $opt_p,
+
     "v|verbose:1"	=> \(my $opt_v = 0),
     ) or usage (1);
 
 my $cve = Test::CVE->new (
     deps    => $opt_d,
+    perl    => $opt_p // 0,
     minimum => $opt_m,
     cpansa  => $opt_j,
     verbose => $opt_v,

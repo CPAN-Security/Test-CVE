@@ -23,6 +23,7 @@
             <ul>
               <li><a href="#verbose">verbose</a></li>
               <li><a href="#deps">deps</a></li>
+              <li><a href="#perl">perl</a></li>
               <li><a href="#minimum">minimum</a></li>
               <li><a href="#cpansa">cpansa</a></li>
               <li><a href="#make_pl">make_pl</a></li>
@@ -61,8 +62,9 @@
 my $cve = Test::CVE-&gt;new (
    verbose  =&gt; 0,
    deps     =&gt; 1,
+   perl     =&gt; 1,
    minimum  =&gt; 0,
-   cpansa   =&gt; &quot;https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json&quot;,
+   cpansa   =&gt; &quot;https://cpan-security.github.io/cpansa-feed/cpansa.json&quot;,
    make_pl  =&gt; &quot;Makefile.PL&quot;,
    cpanfile =&gt; &quot;cpanfile&quot;,
    want     =&gt; [],
@@ -114,6 +116,10 @@ my $csv = $cve-&gt;csv;</code></pre>
 <h4 id="deps">deps</h4>
 
 <p>Select if CVE&#39;s are also checked for direct dependencies. Default is true. If false, just check the module or release itself.</p>
+
+<h4 id="perl">perl</h4>
+
+<p>Select if CVE&#39;s on perl itself are included in the report. Default is true.</p>
 
 <h4 id="minimum">minimum</h4>
 

@@ -3,6 +3,7 @@
     * Opt to install cpan-cve.pl (issue #1)
     * Pass verbosity from script to parser
     * Fix version chain compare with multiple versions
+    * Suppress perl-core CVE's by default in cpan-cve.pl
 
 0.03	- 2023-11-27, H.Merijn Brand
     * Add ->want & ->set_meta

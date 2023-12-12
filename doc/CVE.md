@@ -9,8 +9,9 @@
     my $cve = Test::CVE->new (
        verbose  => 0,
        deps     => 1,
+       perl     => 1,
        minimum  => 0,
-       cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
+       cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
        make_pl  => "Makefile.PL",
        cpanfile => "cpanfile",
        want     => [],
@@ -72,6 +73,10 @@ modules are taken into account. Higher verbose will show more. Default = `0`.
 
 Select if CVE's are also checked for direct dependencies. Default is true. If
 false, just check the module or release itself.
+
+#### perl
+
+Select if CVE's on perl itself are included in the report. Default is true.
 
 #### minimum
 

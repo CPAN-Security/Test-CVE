@@ -13,6 +13,7 @@ package Test::CVE;
  my $cve = Test::CVE->new (
     verbose  => 0,
     deps     => 1,
+    perl     => 1,
     minimum  => 0,
     cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
     make_pl  => "Makefile.PL",
@@ -51,6 +52,7 @@ sub new {
     my %self  = @_;
     $self{cpansa}   ||= "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json";
     $self{deps}     //= 1;
+    $self{perl}     //= 1;
     $self{minimum}  //= 0;
     $self{verbose}  //= 0;
     $self{width}    //= $ENV{COLUMNS} // 80;
@@ -257,6 +259,8 @@ sub test {
     my @w = @{$self->{want}} or return $self; # Nothing to report
 
     foreach my $m (@w) {
+	$m eq "perl" && !$self->{perl} and next;
+
 	my @mv = sort map { $_ || 0 } keys %{$self->{prereq}{$m}{v} || {}};
 	$self->{verbose} and warn "$m: ", join (" / " => grep { $_ } @mv), "\n";
 	my $cv = ($self->{minimum} ? $mv[0] : $mv[-1]) || 0; # Minimum or recommended
@@ -409,6 +413,10 @@ modules are taken into account. Higher verbose will show more. Default = C<0>.
 
 Select if CVE's are also checked for direct dependencies. Default is true. If
 false, just check the module or release itself.
+
+=head4 perl
+
+Select if CVE's on perl itself are included in the report. Default is true.
 
 =head4 minimum
 
