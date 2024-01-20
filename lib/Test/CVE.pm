@@ -137,6 +137,11 @@ sub _read_MakefilePL {
 	$mfx =~ m/^ DISTNAME     $a /ix and $release //= $1;
 	}
 
+    unless ($release || $nm) {
+	carp "Cannot get either NAME or DISTNAME, so cowardly giving up\n";
+	return $self;
+	}
+
     $release //= $nm =~ s{-}{::}gr;
     $release eq "." && $nm and $release = $nm =~ s{::}{-}gr;
     if (!$v && $vf and open $fh, "<", $vf) {
