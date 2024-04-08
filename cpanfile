@@ -4,7 +4,7 @@ requires   "JSON::MaybeXS";
 requires   "Text::Wrap";
 requires   "version";
 
-recommends "HTTP::Tiny"               => "0.059";
+recommends "HTTP::Tiny"               => "0.083";
 recommends "IO::Socket::SSL"          => "1.35";
 
 suggests   "HTTP::Tiny"               => "0.088";

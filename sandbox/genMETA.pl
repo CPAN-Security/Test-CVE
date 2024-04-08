@@ -56,7 +56,7 @@ requires:
     JSON::MaybeXS:       0
     IO::Socket::SSL:     0
 recommends:
-    HTTP::Tiny:          0.059
+    HTTP::Tiny:          0.083
     IO::Socket::SSL:     1.35
 suggests:
     version:             0.9929
