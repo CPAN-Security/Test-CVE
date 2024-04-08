@@ -6,6 +6,7 @@
     * Suppress perl-core CVE's by default in cpan-cve.pl
     * Cowardly give up if no NAME or DISTNAME found
     * Allow multiple folders collected in JSON output
+    * It is 2024
 
 0.03	- 2023-11-27, H.Merijn Brand
     * Add ->want & ->set_meta
