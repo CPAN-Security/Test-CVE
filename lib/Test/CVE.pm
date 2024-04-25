@@ -16,8 +16,11 @@ package Test::CVE;
     perl     => 1,
     minimum  => 0,
     cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
-    make_pl  => "Makefile.PL",
     cpanfile => "cpanfile",
+    meta_jsn => "META.json",
+    meta_yml => "META.yml",     # NYI
+    make_pl  => "Makefile.PL",
+    build_pl => "Build.PL",     # NYI
     want     => [],
     );
 
@@ -57,8 +60,11 @@ sub new {
     $self{verbose}  //= 0;
     $self{width}    //= $ENV{COLUMNS} // 80;
     $self{want}     //= [];
-    $self{make_pl}  ||= "Makefile.PL";
     $self{cpanfile} ||= "cpanfile";
+    $self{meta_jsn} ||= "META.json";
+    $self{meta_yml} ||= "META.yml";
+    $self{make_pl}  ||= "Makefile.PL";
+    $self{build_pl} ||= "Build.PL";
     $self{CVE}        = {};
     bless \%self => $class;
     } # new
@@ -116,7 +122,7 @@ sub _read_MakefilePL {
     $mf ||= $self->{make_pl};
 
     $self->{verbose} and warn "Reading $mf ...\n";
-    open my $fh, "<", $mf or croak "$mf: $!\n";
+    open my $fh, "<", $mf or return $self;
     my $mfc = do { local $/; <$fh> };
     close $fh;
 
@@ -197,9 +203,10 @@ sub _read_cpanfile {
 
 sub _read_META {
     my ($self, $mmf) = @_;
-    $mmf ||= "MYMETA.json";
+    $mmf ||= first { length && -s } $self->{meta_jsn}, "META.json", "MYMETA.json";
 
     -s $mmf or return;
+    $self->{meta_jsn} = $mmf;
     $self->{verbose} and warn "Reading $mmf ...\n";
     open my $fh, "<", $mmf or croak "$mmf: $!\n";
     local $/;
@@ -253,13 +260,15 @@ sub want {
 
 sub test {
     my $self = shift;
+    my $meta = 0;
 
     $self->{mf}      or $self->_read_MakefilePL;
+    $self->{mf}      or $self->_read_META && $meta++;
     my $rel  = $self->{mf}{release} or return $self;
 
     $self->{j}       or $self->_read_cpansa;
     @{$self->{want}} or $self->_read_cpanfile           if $self->{deps};
-    @{$self->{want}} or $self->_read_META               if $self->{deps};
+    @{$self->{want}} or $self->_read_META               if $self->{deps} && !$meta;
     @{$self->{want}} or $self->_read_META ("META.json") if $self->{deps};
 
     $self->{j}{db}{$rel} and unshift @{$self->{want}} => $rel;
