@@ -12,8 +12,11 @@
        perl     => 1,
        minimum  => 0,
        cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
-       make_pl  => "Makefile.PL",
        cpanfile => "cpanfile",
+       meta_jsn => "META.json",
+       meta_yml => "META.yml",     # NYI
+       make_pl  => "Makefile.PL",
+       build_pl => "Build.PL",     # NYI
        want     => [],
        );
 

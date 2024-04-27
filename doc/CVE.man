@@ -1,5 +1,7 @@
 STDIN(1)              User Contributed Perl Documentation             STDIN(1)
 
+
+
 NAME
         Test::CVE - Test against known CVE's
 
@@ -12,8 +14,11 @@ SYNOPSIS
            perl     => 1,
            minimum  => 0,
            cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
-           make_pl  => "Makefile.PL",
            cpanfile => "cpanfile",
+           meta_jsn => "META.json",
+           meta_yml => "META.yml",     # NYI
+           make_pl  => "Makefile.PL",
+           build_pl => "Build.PL",     # NYI
            want     => [],
            );
 
@@ -193,7 +198,9 @@ SEE ALSO
 COPYRIGHT AND LICENSE
         Copyright (C) 2023-2024 H.Merijn Brand.  All rights reserved.
 
-       This  library  is free software;  you can redistribute and/or modify it
+       This library is free software;  you can redistribute and/or modify it
        under the same terms as Perl itself.
 
-perl v5.38.2                      2024-04-08                          STDIN(1)
+
+
+perl v5.38.2                      2024-04-27                          STDIN(1)

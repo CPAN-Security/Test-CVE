@@ -214,10 +214,10 @@ sub _read_META {
     close $fh;
 
     unless ($self->{mf}) {
-	$self->{mf}{release} = $j->{name} =~ s{::}{-}gr;
-	$self->{mf}{version} = $j->{version};
-	$self->{mf}{name}    = $j->{name} =~ s{-}{::}gr;
-	$self->{prereq}{$self->{mf}{release}}{v}{$j->{version} // "-"} = "current";
+	my $rls = $self->{mf}{release} = $j->{name} =~ s{::}{-}gr;
+	my $vsn = $self->{mf}{version} = $j->{version};
+	my $nm  = $self->{mf}{name}    = $j->{name} =~ s{-}{::}gr;
+	$self->{prereq}{$rls}{v}{$vsn // "-"} = "current";
 	}
 
     my $pr = $j->{prereqs} or return $self;
@@ -265,8 +265,9 @@ sub test {
     $self->{mf}      or $self->_read_MakefilePL;
     $self->{mf}      or $self->_read_META && $meta++;
     my $rel  = $self->{mf}{release} or return $self;
+    $self->{verbose} and warn "Processing for $self->{mf}{release} ...\n";
 
-    $self->{j}       or $self->_read_cpansa;
+    $self->{j}{mod}  or $self->_read_cpansa;
     @{$self->{want}} or $self->_read_cpanfile           if $self->{deps};
     @{$self->{want}} or $self->_read_META               if $self->{deps} && !$meta;
     @{$self->{want}} or $self->_read_META ("META.json") if $self->{deps};

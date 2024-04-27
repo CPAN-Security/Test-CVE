@@ -65,8 +65,11 @@ my $cve = Test::CVE-&gt;new (
    perl     =&gt; 1,
    minimum  =&gt; 0,
    cpansa   =&gt; &quot;https://cpan-security.github.io/cpansa-feed/cpansa.json&quot;,
-   make_pl  =&gt; &quot;Makefile.PL&quot;,
    cpanfile =&gt; &quot;cpanfile&quot;,
+   meta_jsn =&gt; &quot;META.json&quot;,
+   meta_yml =&gt; &quot;META.yml&quot;,     # NYI
+   make_pl  =&gt; &quot;Makefile.PL&quot;,
+   build_pl =&gt; &quot;Build.PL&quot;,     # NYI
    want     =&gt; [],
    );
 
