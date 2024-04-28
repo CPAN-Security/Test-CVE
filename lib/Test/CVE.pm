@@ -37,13 +37,14 @@ package Test::CVE;
 use 5.014000;
 use warnings;
 
-our $VERSION = "0.07";
+our $VERSION = "0.08";
 
 use version;
 use Carp;
 use HTTP::Tiny;
 use Text::Wrap;
 use JSON::MaybeXS;
+use YAML::PP ();
 use List::Util qw( first );
 
 # TODO:
@@ -211,14 +212,46 @@ sub _read_cpanfile {
 
 sub _read_META {
     my ($self, $mmf) = @_;
-    $mmf ||= first { length && -s } $self->{meta_jsn}, "META.json", "MYMETA.json";
+    $mmf ||= first { length && -s }
+	$self->{meta_jsn}, "META.json",
+	$self->{meta_yml}, "META.yml",
+	"MYMETA.json", "MYMETA.yml";
 
     $mmf && -s $mmf or return;
-    $self->{meta_jsn} = $mmf;
     $self->{verbose} and warn "Reading $mmf ...\n";
     open my $fh, "<", $mmf or croak "$mmf: $!\n";
     local $/;
-    my $j = decode_json (<$fh>);
+    my $j;
+    if ($mmf =~ m/\.yml$/) {
+	$self->{meta_yml} = $mmf;
+	$j = YAML::PP::Load (<$fh>);
+	$j->{prereqs} //= {
+	    configure => {
+		requires   => $j->{configure_requires},
+		recommends => $j->{configure_recommends},
+		suggests   => $j->{configure_suggests},
+		},
+	    build     => {
+		requires   => $j->{build_requires},
+		recommends => $j->{build_recommends},
+		suggests   => $j->{build_suggests},
+		},
+	    test      => {
+		requires   => $j->{test_requires},
+		recommends => $j->{test_recommends},
+		suggests   => $j->{test_suggests},
+		},
+	    runtime   => {
+		requires   => $j->{requires},
+		recommends => $j->{recommends},
+		suggests   => $j->{suggests},
+		},
+	    };
+	}
+    else {
+	$self->{meta_jsn} = $mmf;
+	$j = decode_json (<$fh>);
+	}
     close $fh;
 
     unless ($self->{mf}) {

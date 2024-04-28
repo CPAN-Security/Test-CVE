@@ -52,9 +52,11 @@ requires:
     perl:                5.014000
     version:             0
     HTTP::Tiny:          0
-    Text::Wrap:          0
-    JSON::MaybeXS:       0
     IO::Socket::SSL:     0
+    JSON::MaybeXS:       0
+    Module::CoreList:    0
+    Text::Wrap:          0
+    YAML::PP:            0
 recommends:
     HTTP::Tiny:          0.083
     IO::Socket::SSL:     1.35
@@ -63,7 +65,9 @@ suggests:
     HTTP::Tiny:          0.088
     IO::Socket::SSL:     2.084
     JSON::MaybeXS:       1.004005
+    Module::CoreList:    5.20240320
     Perl::Tidy:          20230912
+    YAML::PP:            0.38.0
 configure_requires:
     ExtUtils::MakeMaker: 0
 configure_recommends:

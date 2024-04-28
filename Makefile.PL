@@ -26,6 +26,7 @@ my %wm = (
     PREREQ_PM		=> { "version"		=> 0,
 			     "HTTP::Tiny"	=> 0,
 			     "Text::Wrap"	=> 0,
+			     "YAML::PP"		=> 0,
 			     "JSON::MaybeXS"	=> 0,
 			     "Module::CoreList"	=> 0,
 			     },
