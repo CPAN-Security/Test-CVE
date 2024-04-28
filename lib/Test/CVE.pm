@@ -393,6 +393,7 @@ sub report {
 
     local $Text::Wrap::columns = ($args{width} || $self->{width}) - 4;
 
+    my $n;
     foreach my $m (@{$self->{want}}) {
 	my $C = $self->{CVE}{$m} or next;
 	my @c = @{$C->{cve}}     or next;
@@ -402,8 +403,10 @@ sub report {
 	    printf "  %-10s %-12s %-12s %s\n",
 		$c->{dte}, "@{$c->{av}}", $c->{sev} // "-", $cve;
 	    print s/^/       /gmr for wrap ("", "", $c->{dsc});
+	    $n++;
 	    }
 	}
+    $n or say "There heve been no CVE detections in this process";
     } # report
 
 sub cve {
