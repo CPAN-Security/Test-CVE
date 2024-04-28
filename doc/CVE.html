@@ -24,6 +24,7 @@
               <li><a href="#verbose">verbose</a></li>
               <li><a href="#deps">deps</a></li>
               <li><a href="#perl">perl</a></li>
+              <li><a href="#core">core</a></li>
               <li><a href="#minimum">minimum</a></li>
               <li><a href="#cpansa">cpansa</a></li>
               <li><a href="#make_pl">make_pl</a></li>
@@ -63,6 +64,7 @@ my $cve = Test::CVE-&gt;new (
    verbose  =&gt; 0,
    deps     =&gt; 1,
    perl     =&gt; 1,
+   core     =&gt; 1,
    minimum  =&gt; 0,
    cpansa   =&gt; &quot;https://cpan-security.github.io/cpansa-feed/cpansa.json&quot;,
    cpanfile =&gt; &quot;cpanfile&quot;,
@@ -123,6 +125,14 @@ my $csv = $cve-&gt;csv;</code></pre>
 <h4 id="perl">perl</h4>
 
 <p>Select if CVE&#39;s on perl itself are included in the report. Default is true.</p>
+
+<h4 id="core">core</h4>
+
+<p>Replace unspecified versions of CORE modules with the version as shipped by the required perl if known.</p>
+
+<pre><code>require &quot;ExtUtils::MakeMaker&quot;; # no version specified</code></pre>
+
+<p>will set the required version to &quot;6.66&quot; when minimum perl is 5.18.1.</p>
 
 <h4 id="minimum">minimum</h4>
 

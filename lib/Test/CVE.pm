@@ -14,6 +14,7 @@ package Test::CVE;
     verbose  => 0,
     deps     => 1,
     perl     => 1,
+    core     => 1,
     minimum  => 0,
     cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
     cpanfile => "cpanfile",
@@ -36,7 +37,7 @@ package Test::CVE;
 use 5.014000;
 use warnings;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 use version;
 use Carp;
@@ -56,6 +57,7 @@ sub new {
     $self{cpansa}   ||= "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json";
     $self{deps}     //= 1;
     $self{perl}     //= 1;
+    $self{core}     //= 1;
     $self{minimum}  //= 0;
     $self{verbose}  //= 0;
     $self{width}    //= $ENV{COLUMNS} // 80;
@@ -128,7 +130,7 @@ sub _read_MakefilePL {
 
     $mfc or return $self;
 
-    my ($release, $nm, $v, $vf);
+    my ($pv, $release, $nm, $v, $vf) = ("");
     foreach my $mfx (grep { m/=>/ }
 		     map  { split m/\s*[;(){}]\s*/ }
 		     map  { split m/\s*,(?!\s*=>)/ }
@@ -137,16 +139,22 @@ sub _read_MakefilePL {
 	$mfx =~ s/^\s+//;
 	$mfx =~ s/^(['"])(.*?)\1/$2/;	# Unquote key
 	my $a = qr{\s* (?:,\s*)? => \s* (?|"([^""]*)"|'([^'']*)'|([-\w.]+))}x;
-	$mfx =~ m/^ VERSION      $a /ix and $v       //= $1;
-	$mfx =~ m/^ VERSION_FROM $a /ix and $vf      //= $1;
-	$mfx =~ m/^     NAME     $a /ix and $nm      //= $1;
-	$mfx =~ m/^ DISTNAME     $a /ix and $release //= $1;
+	$mfx =~ m/^ VERSION          $a /ix and $v       //= $1;
+	$mfx =~ m/^ VERSION_FROM     $a /ix and $vf      //= $1;
+	$mfx =~ m/^     NAME         $a /ix and $nm      //= $1;
+	$mfx =~ m/^ DISTNAME         $a /ix and $release //= $1;
+	$mfx =~ m/^ MIN_PERL_VERSION $a /ix and $pv      ||= $1;
 	}
 
     unless ($release || $nm) {
 	carp "Cannot get either NAME or DISTNAME, so cowardly giving up\n";
 	return $self;
 	}
+    unless ($pv) {
+	$mfc =~ m/^\s*(?:use|require)\s+v?(5[.0-9]+)/m and $pv = $1;
+	}
+    $pv =~ m/^5\.(\d+)\.(\d+)$/ and $pv = sprintf "5.%03d%03d", $1, $2;
+    $pv =~ m/^5\.(\d{1,3})$/    and $pv = sprintf "5.%03d000",  $1;
 
     $release //= $nm =~ s{-}{::}gr;
     $release eq "." && $nm and $release = $nm =~ s{::}{-}gr;
@@ -166,8 +174,8 @@ sub _read_MakefilePL {
 	carp "Please tell me where I did wrong\n";
 	carp "(ideally this should be done by a CORE module)\n";
 	}
-    $self->{mf} = { name => $nm, version => $v, release => $release };
-    $self->{verbose} and warn "Analysing for $release-", $v // "?", "\n";
+    $self->{mf} = { name => $nm, version => $v, release => $release, mpv => $pv };
+    $self->{verbose} and warn "Analysing for $release-", $v // "?", $pv ? " for minimum perl $pv\n" : "\n";
     $self->{prereq}{$release}{v}{$v // "-"} = "current";
     $self;
     } # _read_MakefilePL
@@ -205,7 +213,7 @@ sub _read_META {
     my ($self, $mmf) = @_;
     $mmf ||= first { length && -s } $self->{meta_jsn}, "META.json", "MYMETA.json";
 
-    -s $mmf or return;
+    $mmf && -s $mmf or return;
     $self->{meta_jsn} = $mmf;
     $self->{verbose} and warn "Reading $mmf ...\n";
     open my $fh, "<", $mmf or croak "$mmf: $!\n";
@@ -219,6 +227,7 @@ sub _read_META {
 	my $nm  = $self->{mf}{name}    = $j->{name} =~ s{-}{::}gr;
 	$self->{prereq}{$rls}{v}{$vsn // "-"} = "current";
 	}
+    $self->{mf}{mpv} ||= $j->{prereqs}{runtime}{requires}{perl};
 
     my $pr = $j->{prereqs} or return $self;
     foreach my $p (qw( configure build test runtime )) {
@@ -280,6 +289,11 @@ sub test {
 	$m eq "perl" && !$self->{perl} and next;
 
 	my @mv = sort map { $_ || 0 } keys %{$self->{prereq}{$m}{v} || {}};
+	if ($self->{core} and my $pv = $self->{mf}{mpv}
+			  and "@mv" !~ m/[1-9]/) {
+	    my $pmv = $Module::CoreList::version{$pv}{$m =~ s/-/::/gr} // "";
+	    $pmv and @mv = ($pmv =~ s/\d\K_.*//r);
+	    }
 	$self->{verbose} and warn "$m: ", join (" / " => grep { $_ } @mv), "\n";
 	my $cv = ($self->{minimum} ? $mv[0] : $mv[-1]) || 0; # Minimum or recommended
 	$self->{CVE}{$m} = {
@@ -435,6 +449,15 @@ false, just check the module or release itself.
 =head4 perl
 
 Select if CVE's on perl itself are included in the report. Default is true.
+
+=head4 core
+
+Replace unspecified versions of CORE modules with the version as shipped by
+the required perl if known.
+
+ require "ExtUtils::MakeMaker"; # no version specified
+
+will set the required version to "6.66" when minimum perl is 5.18.1.
 
 =head4 minimum
 

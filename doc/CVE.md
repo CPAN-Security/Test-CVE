@@ -10,6 +10,7 @@
        verbose  => 0,
        deps     => 1,
        perl     => 1,
+       core     => 1,
        minimum  => 0,
        cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
        cpanfile => "cpanfile",
@@ -80,6 +81,15 @@ false, just check the module or release itself.
 #### perl
 
 Select if CVE's on perl itself are included in the report. Default is true.
+
+#### core
+
+Replace unspecified versions of CORE modules with the version as shipped by
+the required perl if known.
+
+    require "ExtUtils::MakeMaker"; # no version specified
+
+will set the required version to "6.66" when minimum perl is 5.18.1.
 
 #### minimum
 

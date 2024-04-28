@@ -27,6 +27,7 @@ my %wm = (
 			     "HTTP::Tiny"	=> 0,
 			     "Text::Wrap"	=> 0,
 			     "JSON::MaybeXS"	=> 0,
+			     "Module::CoreList"	=> 0,
 			     },
     MIN_PERL_VERSION	=> "5.014",
     clean		=> { FILES => join " ", qw(
