@@ -200,6 +200,10 @@ The list of found CVE's for this release that match the criteria
 
     Severity. Most entries doe not have a severity
 
+# TODO and IDEAS
+
+- Support [SLSA](https://slsa.dev/spec/v0.1/) documents
+
 # AUTHOR
 
 H.Merijn Brand `<hmbrand@cpan.org>`

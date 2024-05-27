@@ -48,8 +48,14 @@ use YAML::PP ();
 use List::Util qw( first );
 
 # TODO:
-# NEW! https://fastapi.metacpan.org/cve/CPANSA-YAML-LibYAML-2012-1152
-#      https://fastapi.metacpan.org/cve/release/YAML-1.20_001
+# * NEW! https://fastapi.metacpan.org/cve/CPANSA-YAML-LibYAML-2012-1152
+#        https://fastapi.metacpan.org/cve/release/YAML-1.20_001
+# * Module::Install Makefile.PL's
+#   use inc::Module::Install;
+#   name            'Algorithm-Diff-XS';
+#   license         'perl';
+#   all_from        'lib/Algorithm/Diff/XS.pm';
+# * Module::Build
 
 sub new {
     my $class = shift;
@@ -606,6 +612,16 @@ Date for this CVE
 =item sev
 
 Severity. Most entries doe not have a severity
+
+=back
+
+=head1 TODO and IDEAS
+
+=over 2
+
+=item
+
+Support L<SLSA|https://slsa.dev/spec/v0.1/> documents
 
 =back
 
