@@ -101,6 +101,7 @@ sub postamble {
 	'	pod-spell-check --aspell --ispell',
 	'',
 	'tgzdist:	$(DISTVNAME).tar.gz distcheck',
+	'	-@perl -Mblib scripts/cpan-cve.pl .',
 	'	-@mv -f $(DISTVNAME).tar.gz $(DISTVNAME).tgz',
 	'	-@cpants_lint.pl $(DISTVNAME).tgz',
 	'	-@rm -f Debian_CPANTS.txt',
