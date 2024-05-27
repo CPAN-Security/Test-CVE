@@ -357,10 +357,11 @@ sub test {
 		my $cmp = join " or " =>
 		    map { s/\s*,\s*/") && XV /gr
 		       =~ s/^/XV /r
-		       =~ s/^=(?=[^=<>])/== /r	# = => ==
+		       =~ s/\s+=(?=[^=<>])\s*/ == /r	# = => ==
 		       =~ s/\s*([=<>]+)\s*/$1 version->parse ("/gr
 		       =~ s/$/")/r
 		       =~ s/\bXV\b/version->parse ("$cv")/gr
+		       =~ s/\)\K(?=\S)/ /gr
 		       } @vsn;
 		$self->{verbose} > 2 and warn "CMP>: $cmp\n";
 		eval "$cmp ? 0 : 1" and next;
