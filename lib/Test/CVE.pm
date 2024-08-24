@@ -37,7 +37,7 @@ package Test::CVE;
 use 5.014000;
 use warnings;
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 
 use version;
 use Carp;
@@ -198,7 +198,7 @@ sub _read_cpanfile {
 	my ($t, $m, $v) = m{ \b
 	  ( requires | recommends | suggest ) \s+
 	  ["'] (\S+) ['"]
-	  (?: \s*=>\s* ["'] (\S+) ['"])?
+	  (?: \s*(?:=>|,)\s* ["'] (\S+) ['"])?
 	  }x or next;
 	$m =~ s/::/-/g;
 	$self->{prereq}{$m}{v}{$v // ""} = $t;
