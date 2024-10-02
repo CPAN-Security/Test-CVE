@@ -141,7 +141,7 @@ sub _read_MakefilePL {
     foreach my $mfx (grep { m/=>/ }
 		     map  { split m/\s*[;(){}]\s*/ }
 		     map  { split m/\s*,(?!\s*=>)/ }
-			    split m/[,;]\s*\r*\n/ => $mfc) {
+			    split m/[,;]\s*(?:#.*)?\r*\n/ => $mfc) {
 	$mfx =~ s/[\s\r\n]+/ /g;
 	$mfx =~ s/^\s+//;
 	$mfx =~ s/^(['"])(.*?)\1/$2/;	# Unquote key
@@ -166,6 +166,7 @@ sub _read_MakefilePL {
     $release //= $nm =~ s{-}{::}gr;
     $release eq "." && $nm and $release = $nm =~ s{::}{-}gr;
     if (!$v && $vf and open $fh, "<", $vf) {
+	warn "Trying to fetch VERSION from $vf ...\n" if $self->{verbose};
 	while (<$fh>) {
 	    m/\b VERSION \s* = \s* ["']? ([^;'"\s]+) /x or next;
 	    $v = $1;
