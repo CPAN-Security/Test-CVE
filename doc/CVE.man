@@ -1,5 +1,7 @@
 STDIN(1)              User Contributed Perl Documentation             STDIN(1)
 
+
+
 NAME
         Test::CVE - Test against known CVE's
 
@@ -209,7 +211,9 @@ SEE ALSO
 COPYRIGHT AND LICENSE
         Copyright (C) 2023-2024 H.Merijn Brand.  All rights reserved.
 
-       This  library  is free software;  you can redistribute and/or modify it
+       This library is free software;  you can redistribute and/or modify it
        under the same terms as Perl itself.
 
-perl v5.38.2                      2024-05-27                          STDIN(1)
+
+
+perl v5.38.2                      2024-10-16                          STDIN(1)
