@@ -61,7 +61,7 @@ sub new {
     my $class = shift;
     @_ % 2 and croak "Uneven number of arguments";
     my %self  = @_;
-    $self{cpansa}   ||= "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json";
+    $self{cpansa}   ||= "https://cpan-security.github.io/cpansa-feed/cpansa.json";
     $self{deps}     //= 1;
     $self{perl}     //= 1;
     $self{core}     //= 1;
@@ -474,7 +474,7 @@ It enables checking the current release only or include its prereqs too.
     verbose  => 0,
     deps     => 1,
     minimum  => 0,
-    cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
+    cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
     make_pl  => "Makefile.PL",
     cpanfile => "cpanfile",
     want     => [],

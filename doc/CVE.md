@@ -62,7 +62,7 @@ It enables checking the current release only or include its prereqs too.
        verbose  => 0,
        deps     => 1,
        minimum  => 0,
-       cpansa   => "https://perl-toolchain-gang.github.io/cpansa-feed/cpansa.json",
+       cpansa   => "https://cpan-security.github.io/cpansa-feed/cpansa.json",
        make_pl  => "Makefile.PL",
        cpanfile => "cpanfile",
        want     => [],
