@@ -59,11 +59,11 @@ requires:
     YAML::PP:            0
 recommends:
     HTTP::Tiny:          0.083
-    IO::Socket::SSL:     1.35
+    IO::Socket::SSL:     1.36
 suggests:
     version:             0.9929
     HTTP::Tiny:          0.088
-    IO::Socket::SSL:     2.084
+    IO::Socket::SSL:     2.089
     JSON::MaybeXS:       1.004005
     Module::CoreList:    5.20240320
     Perl::Tidy:          20230912
@@ -77,7 +77,7 @@ configure_suggests:
 test_requires:
     Test::More:          0
 test_suggests:
-    Test::More:          1.302198
+    Test::More:          1.302207
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/CPAN-Security/Test-CVE
