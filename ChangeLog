@@ -3,6 +3,7 @@
     * Skip comments in VERSION analysis
     * Fixed bugtracker URL
     * It is 2025
+    * Add SECURITY.md
 
 0.08	- 2024-05-27, H.Merijn Brand
     * Parse META.yml and/or MYMETA.yml id other resources are missing
