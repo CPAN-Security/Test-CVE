@@ -1,6 +1,7 @@
-0.09	- 2024-10-02, H.Merijn Brand
+0.09	- 2025-01-02, H.Merijn Brand
     * Allow ',' in cpanfile (Christian Damen)
     * Skip comments in VERSION analysis
+    * Fixed bugtracker URL
 
 0.08	- 2024-05-27, H.Merijn Brand
     * Parse META.yml and/or MYMETA.yml id other resources are missing

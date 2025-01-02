@@ -82,7 +82,7 @@ resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/CPAN-Security/Test-CVE
     homepage:            https://metacpan.org/pod/Test::CVE
-    bugtracker:          http://rt.cpan.org/NoAuth/Bugs.html?Dist=Test-CVE
+    bugtracker:          https://github.com/CPAN-Security/Test-CVE/issues
     IRC:                 irc://irc.perl.org/#cpan-security
 meta-spec:
     version:             1.4
