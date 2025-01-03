@@ -111,9 +111,7 @@ sub postamble {
 	'	prove -vwb sandbox/used-by.pl',
 	'',
 	'doc docs:	doc/Test-CVE.3 doc/Test-CVE.html doc/Test-CVE.man doc/Test-CVE.md',
-	'	perl make-doc.pl',
-	'doc/Test-CVE.man:		doc/Test-CVE.3',
-	'	nroff2man     < $? > $@',
+	'	perl doc/make-doc.pl',
 	'',
 	$min_vsn;
     } # postamble
