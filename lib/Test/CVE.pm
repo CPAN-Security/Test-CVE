@@ -42,8 +42,9 @@ our $VERSION = "0.09";
 use version;
 use Carp;
 use HTTP::Tiny;
-use Text::Wrap;
 use JSON::MaybeXS;
+use Module::CoreList;
+use Text::Wrap;
 use YAML::PP ();
 use List::Util qw( first );
 

@@ -4,11 +4,10 @@ use 5.014000;
 use warnings;
 
 use Getopt::Long qw(:config bundling nopermute);
-my $check = 0;
-my $opt_v = 0;
 GetOptions (
-    "c|check"		=> \$check,
-    "v|verbose:1"	=> \$opt_v,
+    "c|check"		=> \ my $check,
+    "u|update!"		=> \ my $update,
+    "v|verbose:1"	=> \(my $opt_v = 0),
     ) or die "usage: $0 [--check]\n";
 
 use lib "sandbox";
@@ -19,6 +18,7 @@ my $meta = genMETA->new (
     );
 
 $meta->from_data (<DATA>);
+$meta->security_md ($update);
 $meta->gen_cpanfile ();
 
 if ($check) {
@@ -62,11 +62,10 @@ recommends:
     IO::Socket::SSL:     1.36
 suggests:
     version:             0.9929
-    HTTP::Tiny:          0.088
+    HTTP::Tiny:          0.089
     IO::Socket::SSL:     2.089
-    JSON::MaybeXS:       1.004005
-    Module::CoreList:    5.20240320
-    Perl::Tidy:          20230912
+    JSON::MaybeXS:       1.004008
+    Module::CoreList:    5.20241220
     YAML::PP:            0.38.0
 configure_requires:
     ExtUtils::MakeMaker: 0

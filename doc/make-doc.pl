@@ -174,7 +174,8 @@ else {
 	    }
 	$opt_v and say "Writing $mfn (", length $p, ")";
 	open  $oh, ">:encoding(utf-8)", $mfn or die "$mfn: $!\n";
-	print $oh $p;
+	# nroff / troff / grotty cause double-encoding
+	print $oh encode ("iso-8859-1", decode ("utf-8", $p));
 	close $oh;
 	}
     }

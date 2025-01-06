@@ -1,19 +1,26 @@
-This is the Security Policy for the Perl Test-CVE distribution.
+# Security Policy for the Test::CVE distribution.
+
+Report issues via email at: H.Merijn Brand <hmbrand@cpan.org>.
+
+
+This is the Security Policy for the Perl Test::CVE distribution.
 
 The latest version of the Security Policy can be found in the
-[git repository for Test-CVE](https://github.com/CPAN-Security/Test-CVE).
+[git repository for Test::CVE](https://github.com/CPAN-Security/Test-CVE).
 
 This text is based on the CPAN Security Group's Guidelines for Adding
-a Security Policy to Perl Distributions (version 0.1.9)
+a Security Policy to Perl Distributions (version 1.0.0)
 https://security.metacpan.org/docs/guides/security-policy-for-authors.html
 
 # How to Report a Security Vulnerability
 
 Security vulnerabilities can be reported by e-mail to the current
-project maintainers at <hmbrand@cpan.org>.
+project maintainers at H.Merijn Brand <hmbrand@cpan.org>.
 
 Please include as many details as possible, including code samples
-or test cases, so that we can reproduce the issue.
+or test cases, so that we can reproduce the issue.  Check that your
+report does not expose any sensitive data, such as passwords,
+tokens, or personal information.
 
 If you would like any help with triaging the issue, or if the issue
 is being actively exploited, please copy the report to the CPAN
@@ -36,7 +43,7 @@ on the CPANSec website.
 The maintainer(s) aim to acknowledge your security report as soon as
 possible.  However, this project is maintained by a single person in
 their spare time, and they cannot guarantee a rapid response.  If you
-have not received a response from the them within a week, then
+have not received a response from them within 10 days, then
 please send a reminder to them and copy the report to CPANSec at
 <cpan-security@security.metacpan.org>.
 
@@ -51,9 +58,9 @@ modules or downstream software that uses this software.
 
 They may also forward this issue to CPANSec.
 
-# Which Software this Policy Applies to
+# Which Software This Policy Applies To
 
-Any security vulnerabilities in Test-CVE are covered by this policy.
+Any security vulnerabilities in Test::CVE are covered by this policy.
 
 Security vulnerabilities are considered anything that allows users
 to execute unauthorised code, access unauthorised resources, or to
@@ -61,27 +68,27 @@ have an adverse impact on accessibility or performance of a system.
 
 Security vulnerabilities in upstream software (embedded libraries,
 prerequisite modules or system libraries, or in Perl), are not
-covered by this policy unless they affect Test-CVE, or Test-CVE can
+covered by this policy unless they affect Test::CVE, or Test::CVE can
 be used to exploit vulnerabilities in them.
 
 Security vulnerabilities in downstream software (any software that
-uses Test-CVE, or plugins to it that are not included with the
-Test-CVE distribution) are not covered by this policy.
+uses Test::CVE, or plugins to it that are not included with the
+Test::CVE distribution) are not covered by this policy.
 
-## Supported Versions of Test-CVE
+## Supported Versions of Test::CVE
 
 The maintainer(s) will only commit to releasing security fixes for
-the latest version of Test-CVE.
+the latest version of Test::CVE.
 
-Note that the Test-CVE project only supports major versions of Perl
-released in the past ten (10) years, even though Test-CVE will run on
+Note that the Test::CVE project only supports major versions of Perl
+released in the past 5 years, even though Test::CVE will run on
 older versions of Perl.  If a security fix requires us to increase
 the minimum version of Perl that is supported, then we may do so.
 
 # Installation and Usage Issues
 
 The distribution metadata specifies minimum versions of
-prerequisites that are required for Test-CVE to work.  However, some
+prerequisites that are required for Test::CVE to work.  However, some
 of these prerequisites may have security vulnerabilities, and you
 should ensure that you are using up-to-date versions of these
 prerequisites.

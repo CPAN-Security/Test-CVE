@@ -84,7 +84,7 @@ package MY;
 
 sub postamble {
     my $make_sep = $^O eq "VMS" ? "," : "";
-    my $min_vsn  = (-d "xt" && -d "tmp" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
+    my $min_vsn  = (-d "xt" && -d "sandbox" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
 	? join "\n" =>
 	    'test ::',
 	    '	-@env TEST_FILES="xt/*.t" make -e test_dynamic',
