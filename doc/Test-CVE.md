@@ -19,7 +19,11 @@ Test::CVE - Test against known CVE's
        make_pl  => "Makefile.PL",
        build_pl => "Build.PL",     # NYI
        want     => [],
+       skip     => "CVE.SKIP",
        );
+
+    $cve->skip ("CVE.SKIP");
+    $cve->skip ([qw( CVE-2011-0123 CVE-2020-1234 )]);
 
     $cve->want ("Foo::Bar", "4.321");
     $cve->want ("ExtUtils-MakeMaker");
@@ -66,6 +70,7 @@ It enables checking the current release only or include its prereqs too.
        make_pl  => "Makefile.PL",
        cpanfile => "cpanfile",
        want     => [],
+       skip     => "CVE.SKIP",
        );
 
 #### verbose
@@ -119,6 +124,10 @@ A list of extra prereqs. When you know in advance, pass the list in this
 attribute. You can also add them to the object with the method later. This
 attribute does not support versions, the method does.
 
+#### skip
+
+An optional specification of CVE's to skip/ignore. See ["skip"](#skip).
+
 ### require
 
     my $cve = Test::CVE->new ();
@@ -134,6 +143,34 @@ Add a dependency to the list. Only adds the dependency if known CVE's exist.
 
 Force set distribution information, preventing reading `Makefile.PL` and/or
 `cpanfile`.
+
+### skip
+
+
+    my @skip = $cve->skip;
+    $cve->skip (undef);
+    $cve->skip ("CVE.SKIP");
+    $cve->skip ("CVE-2011-0123", "CVE-2022-1234");
+    $cve->skip ([qw( CVE-2011-0123 CVE-2020-1234 )]);
+    $cve->skip ({ "CVE-2013-2222" => "We do not use this" });
+
+By default all CVE's listed in file `CVE.SKIP` will be ignored in the reports.
+
+When no argument is given, the current list of ignored CVE's is returned as
+an array-ref.
+
+When the only argument is the name of a readable file, the file is expected to
+have one tag per line of a CVE to be ignored, optionally followed by space and
+a reason:
+
+    CVE-2011-0123   We are not using this feature
+    CVE-2020-1234
+
+When the only argument is an array-ref, all entries are ignored.
+
+When the only argument is a hash-ref, all keys are ignored.
+
+Otherwise, all arguments are ignored.
 
 ### test
 

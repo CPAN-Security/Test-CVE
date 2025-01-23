@@ -1,9 +1,10 @@
-0.09	- 2025-01-06, H.Merijn Brand
+0.09	- 2025-01-23, H.Merijn Brand
     * Allow ',' in cpanfile (Christian Damen)
     * Skip comments in VERSION analysis
     * Fixed bugtracker URL
     * It is 2025
     * Add SECURITY.md
+    * Support for CVE.SKIP and other ways to ignore CVE's
 
 0.08	- 2024-05-27, H.Merijn Brand
     * Parse META.yml and/or MYMETA.yml id other resources are missing

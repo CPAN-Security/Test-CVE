@@ -30,10 +30,12 @@
               <li><a href="#make_pl">make_pl</a></li>
               <li><a href="#cpanfile">cpanfile</a></li>
               <li><a href="#want">want</a></li>
+              <li><a href="#skip">skip</a></li>
             </ul>
           </li>
           <li><a href="#require">require</a></li>
           <li><a href="#set_meta">set_meta</a></li>
+          <li><a href="#skip1">skip </a></li>
           <li><a href="#test">test</a></li>
           <li><a href="#report">report</a></li>
           <li><a href="#cve">cve</a>
@@ -74,7 +76,11 @@ my $cve = Test::CVE-&gt;new (
    make_pl  =&gt; &quot;Makefile.PL&quot;,
    build_pl =&gt; &quot;Build.PL&quot;,     # NYI
    want     =&gt; [],
+   skip     =&gt; &quot;CVE.SKIP&quot;,
    );
+
+$cve-&gt;skip (&quot;CVE.SKIP&quot;);
+$cve-&gt;skip ([qw( CVE-2011-0123 CVE-2020-1234 )]);
 
 $cve-&gt;want (&quot;Foo::Bar&quot;, &quot;4.321&quot;);
 $cve-&gt;want (&quot;ExtUtils-MakeMaker&quot;);
@@ -113,6 +119,7 @@ my $csv = $cve-&gt;csv;</code></pre>
    make_pl  =&gt; &quot;Makefile.PL&quot;,
    cpanfile =&gt; &quot;cpanfile&quot;,
    want     =&gt; [],
+   skip     =&gt; &quot;CVE.SKIP&quot;,
    );</code></pre>
 
 <h4 id="verbose">verbose</h4>
@@ -157,6 +164,10 @@ my $csv = $cve-&gt;csv;</code></pre>
 
 <p>A list of extra prereqs. When you know in advance, pass the list in this attribute. You can also add them to the object with the method later. This attribute does not support versions, the method does.</p>
 
+<h4 id="skip">skip</h4>
+
+<p>An optional specification of CVE&#39;s to skip/ignore. See <a href="#skip">&quot;skip&quot;</a>.</p>
+
 <h3 id="require">require</h3>
 
 <pre><code>my $cve = Test::CVE-&gt;new ();
@@ -171,6 +182,30 @@ $cve-&gt;require (&quot;Baz-Fumble&quot;, &quot;4.321&quot;);</code></pre>
 $cve-&gt;set_meta (&quot;script.pl&quot;, &quot;0.01&quot;);</code></pre>
 
 <p>Force set distribution information, preventing reading <code>Makefile.PL</code> and/or <code>cpanfile</code>.</p>
+
+<h3 id="skip1">skip </h3>
+
+<pre><code>my @skip = $cve-&gt;skip;
+$cve-&gt;skip (undef);
+$cve-&gt;skip (&quot;CVE.SKIP&quot;);
+$cve-&gt;skip (&quot;CVE-2011-0123&quot;, &quot;CVE-2022-1234&quot;);
+$cve-&gt;skip ([qw( CVE-2011-0123 CVE-2020-1234 )]);
+$cve-&gt;skip ({ &quot;CVE-2013-2222&quot; =&gt; &quot;We do not use this&quot; });</code></pre>
+
+<p>By default all CVE&#39;s listed in file <code>CVE.SKIP</code> will be ignored in the reports.</p>
+
+<p>When no argument is given, the current list of ignored CVE&#39;s is returned as an array-ref.</p>
+
+<p>When the only argument is the name of a readable file, the file is expected to have one tag per line of a CVE to be ignored, optionally followed by space and a reason:</p>
+
+<pre><code>CVE-2011-0123   We are not using this feature
+CVE-2020-1234</code></pre>
+
+<p>When the only argument is an array-ref, all entries are ignored.</p>
+
+<p>When the only argument is a hash-ref, all keys are ignored.</p>
+
+<p>Otherwise, all arguments are ignored.</p>
 
 <h3 id="test">test</h3>
 

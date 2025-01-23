@@ -23,7 +23,11 @@ Test::CVE - Test against known CVE's
     make_pl  => "Makefile.PL",
     build_pl => "Build.PL",     # NYI
     want     => [],
+    skip     => "CVE.SKIP",
     );
+
+ $cve->skip ("CVE.SKIP");
+ $cve->skip ([qw( CVE-2011-0123 CVE-2020-1234 )]);
 
  $cve->want ("Foo::Bar", "4.321");
  $cve->want ("ExtUtils-MakeMaker");
@@ -76,8 +80,46 @@ sub new {
     $self{make_pl}  ||= "Makefile.PL";
     $self{build_pl} ||= "Build.PL";
     $self{CVE}        = {};
-    bless \%self => $class;
+    my $obj = bless \%self => $class;
+    $obj->skip ($self{skip} // "CVE.SKIP");
+    return $obj;
     } # new
+
+sub skip {
+    my $self = shift;
+    if (@_) {
+	if (my $skip = shift) {
+	    if (ref $skip eq "HASH") {
+		$self->{skip} = $skip;
+		}
+	    elsif (ref $skip eq "ARRAY") {
+		$self->{skip} = { map { $_ => 1 } @$skip };
+		}
+	    elsif ($skip =~ m/^\x20-\xff]+$/ and open my $fh, "<", $skip) {
+		my %s;
+		while (<$fh>) {
+		    s/[\s\r\n]+\z//;
+		    m/^\s*(\w[-\w]+)(?:\s+(.*))?$/ or next;
+		    $s{$1} = $2 // "";
+		    }
+		close $fh;
+		$self->{skip} = { %s };
+		}
+	    else {
+		$self->{skip} = {
+		    map  { $_ => 1 }
+		    grep { m/^\w[-\w]+$/ }
+		    $skip, @_
+		    };
+		}
+	    }
+	else {
+	    $self->{skip} = undef;
+	    }
+	}
+    $self->{skip} ||= {};
+    return [ sort keys %{$self->{skip}} ];
+    } # skip
 
 sub _read_cpansa {
     my $self = shift;
@@ -348,7 +390,7 @@ sub test {
 	foreach my $c (@{$self->{j}{db}{$m}}) {
 	    # Ignored: references
 	    my $cid = $c->{cpansa_id};
-	    my @cve = @{$c->{cves} || []};
+	    my @cve = grep { !exists $self->{skip}{$_} } @{$c->{cves} || []};
 	    my $dte = $c->{reported};
 	    my $sev = $c->{severity};
 	    my $dsc = $c->{description};
@@ -479,6 +521,7 @@ It enables checking the current release only or include its prereqs too.
     make_pl  => "Makefile.PL",
     cpanfile => "cpanfile",
     want     => [],
+    skip     => "CVE.SKIP",
     );
 
 =head4 verbose
@@ -532,6 +575,10 @@ A list of extra prereqs. When you know in advance, pass the list in this
 attribute. You can also add them to the object with the method later. This
 attribute does not support versions, the method does.
 
+=head4 skip
+
+An optional specification of CVE's to skip/ignore. See L</skip>.
+
 =head3 require
 
  my $cve = Test::CVE->new ();
@@ -547,6 +594,34 @@ Add a dependency to the list. Only adds the dependency if known CVE's exist.
 
 Force set distribution information, preventing reading C<Makefile.PL> and/or
 C<cpanfile>.
+
+=head3 skip
+X<skip>
+
+ my @skip = $cve->skip;
+ $cve->skip (undef);
+ $cve->skip ("CVE.SKIP");
+ $cve->skip ("CVE-2011-0123", "CVE-2022-1234");
+ $cve->skip ([qw( CVE-2011-0123 CVE-2020-1234 )]);
+ $cve->skip ({ "CVE-2013-2222" => "We do not use this" });
+
+By default all CVE's listed in file C<CVE.SKIP> will be ignored in the reports.
+
+When no argument is given, the current list of ignored CVE's is returned as
+an array-ref.
+
+When the only argument is the name of a readable file, the file is expected to
+have one tag per line of a CVE to be ignored, optionally followed by space and
+a reason:
+
+  CVE-2011-0123   We are not using this feature
+  CVE-2020-1234
+
+When the only argument is an array-ref, all entries are ignored.
+
+When the only argument is a hash-ref, all keys are ignored.
+
+Otherwise, all arguments are ignored.
 
 =head3 test
 
