@@ -2,7 +2,7 @@
 
 package genMETA;
 
-our $VERSION = "1.17-20250106";
+our $VERSION = "1.18-20250113";
 
 use 5.014001;
 use warnings;
@@ -599,24 +599,24 @@ sub security_md {
 
     my $sfn = "SECURITY.md";
     my $policy = Software::Security::Policy::Individual->new ({
-        maintainer    => $self->{h}{author}[0],
-        program       => $self->{name},
-        timeframe     => "10 days",
-        url           => $self->{h}{resources}{repository},
-        support_years => 5,
+        maintainer         => $self->{h}{author}[0],
+        program            => $self->{name},
+        timeframe          => "10 days",
+        url                => $self->{h}{resources}{repository},
+        perl_support_years => 5,
         });
 
     my $smd = $policy->fulltext;
 
     unless (-s $sfn) {
 	open my $fh, ">:encoding(utf-8)", $sfn or die "$sfn: $! \n";
-	say     $fh $sfn;
+	print   $fh $smd;
 	close   $fh;
 
 	if (open $fh, "<", "MANIFEST") {
 	    my @m = <$fh>;
 	    close $fh;
-	    unless (grep m/^$sfn$/ => @m) {
+	    unless (grep m/^$sfn(?:\s|$)/ => @m) {
 		open  $fh, ">>", "MANIFEST" or die "MANIFEST: $!\n";
 		say   $fh "$sfn\t\tGuide for reporting security issues";
 		close $fh;
@@ -633,9 +633,8 @@ sub security_md {
 
     if ($update) {
 	open my $fh, ">:encoding(utf-8)", $sfn or die "$sfn: $!\n";
-	printf $fh $smd;
-	close  $fh;
-	DDumper $policy;
+	print   $fh $smd;
+	close   $fh;
 	say "$sfn updated";
 	}
     else {
