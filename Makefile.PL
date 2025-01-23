@@ -110,7 +110,9 @@ sub postamble {
 	'test_used:	test',
 	'	prove -vwb sandbox/used-by.pl',
 	'',
-	'doc docs:	doc/Test-CVE.3 doc/Test-CVE.html doc/Test-CVE.man doc/Test-CVE.md',
+	'.PHONY:	doc',
+	'doc docs::	doc/Test-CVE.md',
+	'doc/Test-CVE.md:	lib/Test/CVE.pm',
 	'	perl doc/make-doc.pl',
 	'',
 	$min_vsn;
