@@ -172,6 +172,9 @@ When the only argument is a hash-ref, all keys are ignored.
 
 Otherwise, all arguments are ignored.
 
+Future extensions might read [VEX](https://github.com/openvex/spec)
+specifications (too).
+
 ### test
 
 Execute the test. Files are read as needed.
@@ -240,6 +243,7 @@ The list of found CVE's for this release that match the criteria
 # TODO and IDEAS
 
 - Support [SLSA](https://slsa.dev/spec/v0.1/) documents
+- Support [VEX](https://github.com/openvex/spec) documents
 
 # AUTHOR
 

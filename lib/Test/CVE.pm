@@ -623,6 +623,9 @@ When the only argument is a hash-ref, all keys are ignored.
 
 Otherwise, all arguments are ignored.
 
+Future extensions might read L<VEX|https://github.com/openvex/spec>
+specifications (too).
+
 =head3 test
 
 Execute the test. Files are read as needed.
@@ -699,6 +702,10 @@ Severity. Most entries doe not have a severity
 =item
 
 Support L<SLSA|https://slsa.dev/spec/v0.1/> documents
+
+=item
+
+Support L<VEX|https://github.com/openvex/spec> documents
 
 =back
 
