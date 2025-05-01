@@ -72,11 +72,11 @@ configure_requires:
 configure_recommends:
     ExtUtils::MakeMaker: 7.22
 configure_suggests:
-    ExtUtils::MakeMaker: 7.70
+    ExtUtils::MakeMaker: 7.72
 test_requires:
     Test::More:          0
 test_suggests:
-    Test::More:          1.302207
+    Test::More:          1.302209
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/CPAN-Security/Test-CVE
