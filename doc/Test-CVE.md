@@ -32,6 +32,8 @@ Test::CVE - Test against known CVE's
     print $cve->report (width => $ENV{COLUMNS} || 80);
     my $csv = $cve->csv;
 
+    has_no_cves (....);
+
 # INCENTIVE
 
 On the Perl Toolchain Summit 2023, the CPAN Security Working Group (CPAN-SEC)
@@ -239,6 +241,26 @@ The list of found CVE's for this release that match the criteria
 - sev
 
     Severity. Most entries doe not have a severity
+
+### has\_no\_cves
+
+    use Test::More;
+    use Test::CVE;
+
+    has_no_cves ();
+    done_testing;
+
+Will return `ok` is no open CVE's are detected for the current build
+environment.
+
+`has_no_cves` will accept all arguments that `new` accepts.
+
+    has_no_cves (@args);
+
+is identical to
+
+    my @cve = @{Test::CVE->new (@args)->test-cve // []};
+    ok (@cve == 0, "This release found no open CVEs");
 
 # TODO and IDEAS
 

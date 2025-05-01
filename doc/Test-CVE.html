@@ -45,6 +45,7 @@
               <li><a href="#cve1">cve</a></li>
             </ul>
           </li>
+          <li><a href="#has_no_cves">has_no_cves</a></li>
         </ul>
       </li>
     </ul>
@@ -87,7 +88,9 @@ $cve-&gt;want (&quot;ExtUtils-MakeMaker&quot;);
 
 $cve-&gt;test;
 print $cve-&gt;report (width =&gt; $ENV{COLUMNS} || 80);
-my $csv = $cve-&gt;csv;</code></pre>
+my $csv = $cve-&gt;csv;
+
+has_no_cves (....);</code></pre>
 
 <h1 id="INCENTIVE">INCENTIVE</h1>
 
@@ -288,6 +291,25 @@ CVE-2020-1234</code></pre>
 
 </dd>
 </dl>
+
+<h3 id="has_no_cves">has_no_cves</h3>
+
+<pre><code>use Test::More;
+use Test::CVE;
+
+has_no_cves ();
+done_testing;</code></pre>
+
+<p>Will return <code>ok</code> is no open CVE&#39;s are detected for the current build environment.</p>
+
+<p><code>has_no_cves</code> will accept all arguments that <code>new</code> accepts.</p>
+
+<pre><code>has_no_cves (@args);</code></pre>
+
+<p>is identical to</p>
+
+<pre><code>my @cve = @{Test::CVE-&gt;new (@args)-&gt;test-cve // []};
+ok (@cve == 0, &quot;This release found no open CVEs&quot;);</code></pre>
 
 <h1 id="TODO-and-IDEAS">TODO and IDEAS</h1>
 

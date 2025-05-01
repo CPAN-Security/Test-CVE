@@ -1,4 +1,7 @@
-0.09	- 2025-01-23, H.Merijn Brand
+0.10	- 2025-05-01, H.Merijn Brand
+    * has_no_cves (issue#4)
+
+0.09	- 2025-03-17, H.Merijn Brand
     * Allow ',' in cpanfile (Christian Damen)
     * Skip comments in VERSION analysis
     * Fixed bugtracker URL

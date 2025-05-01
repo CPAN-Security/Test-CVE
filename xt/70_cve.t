@@ -22,4 +22,6 @@ else {
     ok (1, "No CVE's reported!");
     }
 
+has_no_cves ();
+
 done_testing;

@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Test::CVE 3"
-.TH Test::CVE 3 2025-01-23 "perl v5.40.0" "User Contributed Perl Documentation"
+.TH Test::CVE 3 2025-05-01 "perl v5.40.2" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -95,6 +95,8 @@ Test::CVE \- Test against known CVE\*(Aqs
 \& $cve\->test;
 \& print $cve\->report (width => $ENV{COLUMNS} || 80);
 \& my $csv = $cve\->csv;
+\&
+\& has_no_cves (....);
 .Ve
 .SH INCENTIVE
 .IX Header "INCENTIVE"
@@ -329,6 +331,33 @@ Date for this CVE
 .IP sev 2
 .IX Item "sev"
 Severity. Most entries doe not have a severity
+.PP
+\fIhas_no_cves\fR
+.IX Subsection "has_no_cves"
+.PP
+.Vb 2
+\& use Test::More;
+\& use Test::CVE;
+\&
+\& has_no_cves ();
+\& done_testing;
+.Ve
+.PP
+Will return \f(CW\*(C`ok\*(C'\fR is no open CVE\*(Aqs are detected for the current build
+environment.
+.PP
+\&\f(CW\*(C`has_no_cves\*(C'\fR will accept all arguments that \f(CW\*(C`new\*(C'\fR accepts.
+.PP
+.Vb 1
+\& has_no_cves (@args);
+.Ve
+.PP
+is identical to
+.PP
+.Vb 2
+\& my @cve = @{Test::CVE\->new (@args)\->test\-cve // []};
+\& ok (@cve == 0, "This release found no open CVEs");
+.Ve
 .SH "TODO and IDEAS"
 .IX Header "TODO and IDEAS"
 .IP \(bu 2
