@@ -8,6 +8,7 @@
 \.releaserc
 \.perltidyrc
 \.exrc$
+^\.test_info\.
 ^blib/
 ^cover_db/
 ^doc/
