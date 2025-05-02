@@ -48,6 +48,9 @@ my %wm = (
 		"url"	=> "https://github.com/CPAN-Security/Test-CVE.git",
 		"web"	=> "https://github.com/CPAN-Security/Test-CVE",
 		},
+	    bugtracker	=> {
+		"web"	=> "https://github.com/CPAN-Security/Test-CVE/issues",
+		},
 	    },
 	},
     );
