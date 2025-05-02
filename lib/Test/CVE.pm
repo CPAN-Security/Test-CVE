@@ -48,14 +48,15 @@ our $VERSION = "0.10";
 use version;
 use Carp;
 use HTTP::Tiny;
+use Text::Wrap;
 use JSON::MaybeXS;
 use Module::CoreList;
-use Text::Wrap;
-use YAML::PP ();
+use YAML::PP     ();
 use List::Util qw( first );
+use base       qw( Test::Builder::Module );
 
 use parent "Exporter";
-our @EXPORT = qw( has_no_cves );
+our @EXPORT  = qw( has_no_cves );
 
 # TODO:
 # * NEW! https://fastapi.metacpan.org/cve/CPANSA-YAML-LibYAML-2012-1152
@@ -488,10 +489,8 @@ sub has_no_cves {
     my $cve = Test::CVE->new (@_);
     $cve->test;
     my @cve = $cve->cve;
-    use Test2::API qw( context );
-    my $ctx = context;
-    $ctx->ok (@cve == 0, "This release found no open CVEs");
-    $ctx->release;
+    my $tb = __PACKAGE__->builder;
+    $tb->ok (@cve == 0, "This release found no open CVEs");
     } # has_no_cves
 
 1;
