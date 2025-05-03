@@ -256,7 +256,7 @@ DESCRIPTION
 
        is identical to
 
-        my @cve = @{Test::CVE->new (@args)->test-cve // []};
+        my @cve = Test::CVE->new (@args)->test->cve;
         ok (@cve == 0, "This release found no open CVEs");
 
 TODO and IDEAS
@@ -276,4 +276,4 @@ COPYRIGHT AND LICENSE
        This library is free software;  you can redistribute and/or modify it
        under the same terms as Perl itself.
 
-perl v5.40.2                      2025-05-02                      Test::CVE(3)
+perl v5.40.2                      2025-05-03                      Test::CVE(3)

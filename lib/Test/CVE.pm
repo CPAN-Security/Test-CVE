@@ -43,7 +43,7 @@ Test::CVE - Test against known CVE's
 use 5.014000;
 use warnings;
 
-our $VERSION = "0.10";
+our $VERSION = "0.11";
 
 use version;
 use Carp;
@@ -726,7 +726,7 @@ C<has_no_cves> will accept all arguments that C<new> accepts.
 
 is identical to
 
- my @cve = @{Test::CVE->new (@args)->test-cve // []};
+ my @cve = Test::CVE->new (@args)->test->cve;
  ok (@cve == 0, "This release found no open CVEs");
 
 =head1 TODO and IDEAS

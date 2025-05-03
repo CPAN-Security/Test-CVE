@@ -308,7 +308,7 @@ done_testing;</code></pre>
 
 <p>is identical to</p>
 
-<pre><code>my @cve = @{Test::CVE-&gt;new (@args)-&gt;test-cve // []};
+<pre><code>my @cve = Test::CVE-&gt;new (@args)-&gt;test-&gt;cve;
 ok (@cve == 0, &quot;This release found no open CVEs&quot;);</code></pre>
 
 <h1 id="TODO-and-IDEAS">TODO and IDEAS</h1>

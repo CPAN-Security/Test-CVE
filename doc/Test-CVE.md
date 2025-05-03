@@ -259,7 +259,7 @@ environment.
 
 is identical to
 
-    my @cve = @{Test::CVE->new (@args)->test-cve // []};
+    my @cve = Test::CVE->new (@args)->test->cve;
     ok (@cve == 0, "This release found no open CVEs");
 
 # TODO and IDEAS
