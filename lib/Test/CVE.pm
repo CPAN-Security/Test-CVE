@@ -495,6 +495,7 @@ sub has_no_cves {
     # By default skip this test is not in a development env
     if (!exists $attr{author} and
 	 ((caller)[1] =~ m{(?:^|/)xt/[^/]+\.t$} or
+	  $ENV{AUTHOR_TESTING}                  or
 	  -d ".git" && $^X =~ m{/perl$})) {
 	$attr{author}++;
 	}
@@ -742,6 +743,10 @@ Severity. Most entries doe not have a severity
 
 =head3 has_no_cves
 
+Note upfront: You most likely do B<NOT> want this in a test-suite, as
+making the test suite C<FAIL> on something the end-user is incapable
+of fixing might not be a friendly approach.
+
  use Test::More;
  use Test::CVE;
 
@@ -766,7 +771,7 @@ By default, C<has_no_cves> will only run in a development environment,
 but you can control that with the C<author> attribute. When not passed,
 it will default to C<1> if either the test unit is run from the C<xt/>
 folder or if filder C<.git> exists and the invoking perl has no version
-extension in its name.
+extension in its name, or if C<AUTHOR_TESTING> has a true value.
 
 =head1 TODO and IDEAS
 

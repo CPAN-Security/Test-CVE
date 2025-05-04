@@ -241,6 +241,10 @@ DESCRIPTION
 
        has_no_cves
 
+       Note upfront: You most likely do NOT want this in a test-suite, as
+       making the test suite "FAIL" on something the end-user is incapable of
+       fixing might not be a friendly approach.
+
         use Test::More;
         use Test::CVE;
 
@@ -265,7 +269,7 @@ DESCRIPTION
        but you can control that with the "author" attribute. When not passed,
        it will default to 1 if either the test unit is run from the "xt/"
        folder or if filder ".git" exists and the invoking perl has no version
-       extension in its name.
+       extension in its name, or if "AUTHOR_TESTING" has a true value.
 
 TODO and IDEAS
        * Support SLSA <https://slsa.dev/spec/v0.1/> documents

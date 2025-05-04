@@ -294,6 +294,8 @@ CVE-2020-1234</code></pre>
 
 <h3 id="has_no_cves">has_no_cves</h3>
 
+<p>Note upfront: You most likely do <b>NOT</b> want this in a test-suite, as making the test suite <code>FAIL</code> on something the end-user is incapable of fixing might not be a friendly approach.</p>
+
 <pre><code>use Test::More;
 use Test::CVE;
 
@@ -312,7 +314,7 @@ done_testing;</code></pre>
 ok (@cve == 0, &quot;This release found no open CVEs&quot;);
 diag (&quot;...&quot;) for map { ... } @cve;</code></pre>
 
-<p>By default, <code>has_no_cves</code> will only run in a development environment, but you can control that with the <code>author</code> attribute. When not passed, it will default to <code>1</code> if either the test unit is run from the <code>xt/</code> folder or if filder <code>.git</code> exists and the invoking perl has no version extension in its name.</p>
+<p>By default, <code>has_no_cves</code> will only run in a development environment, but you can control that with the <code>author</code> attribute. When not passed, it will default to <code>1</code> if either the test unit is run from the <code>xt/</code> folder or if filder <code>.git</code> exists and the invoking perl has no version extension in its name, or if <code>AUTHOR_TESTING</code> has a true value.</p>
 
 <h1 id="TODO-and-IDEAS">TODO and IDEAS</h1>
 

@@ -335,6 +335,10 @@ Severity. Most entries doe not have a severity
 \fIhas_no_cves\fR
 .IX Subsection "has_no_cves"
 .PP
+Note upfront: You most likely do \fBNOT\fR want this in a test\-suite, as
+making the test suite \f(CW\*(C`FAIL\*(C'\fR on something the end\-user is incapable
+of fixing might not be a friendly approach.
+.PP
 .Vb 2
 \& use Test::More;
 \& use Test::CVE;
@@ -365,7 +369,7 @@ By default, \f(CW\*(C`has_no_cves\*(C'\fR will only run in a development environ
 but you can control that with the \f(CW\*(C`author\*(C'\fR attribute. When not passed,
 it will default to \f(CW1\fR if either the test unit is run from the \f(CW\*(C`xt/\*(C'\fR
 folder or if filder \f(CW\*(C`.git\*(C'\fR exists and the invoking perl has no version
-extension in its name.
+extension in its name, or if \f(CW\*(C`AUTHOR_TESTING\*(C'\fR has a true value.
 .SH "TODO and IDEAS"
 .IX Header "TODO and IDEAS"
 .IP \(bu 2

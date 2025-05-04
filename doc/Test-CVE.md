@@ -244,6 +244,10 @@ The list of found CVE's for this release that match the criteria
 
 ### has\_no\_cves
 
+Note upfront: You most likely do **NOT** want this in a test-suite, as
+making the test suite `FAIL` on something the end-user is incapable
+of fixing might not be a friendly approach.
+
     use Test::More;
     use Test::CVE;
 
@@ -268,7 +272,7 @@ By default, `has_no_cves` will only run in a development environment,
 but you can control that with the `author` attribute. When not passed,
 it will default to `1` if either the test unit is run from the `xt/`
 folder or if filder `.git` exists and the invoking perl has no version
-extension in its name.
+extension in its name, or if `AUTHOR_TESTING` has a true value.
 
 # TODO and IDEAS
 
