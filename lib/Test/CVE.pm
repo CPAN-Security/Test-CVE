@@ -52,7 +52,7 @@ use Text::Wrap;
 use JSON::MaybeXS;
 use Module::CoreList;
 use YAML::PP     ();
-use List::Util qw( first );
+use List::Util qw( first uniq );
 use base       qw( Test::Builder::Module );
 
 use parent "Exporter";
@@ -86,6 +86,7 @@ sub new {
     $self{make_pl}  ||= "Makefile.PL";
     $self{build_pl} ||= "Build.PL";
     $self{CVE}        = {};
+    ref $self{want} or $self{want} = [ $self{want} ]; # new->(want => "Foo")
     my $obj = bless \%self => $class;
     $obj->skip ($self{skip} // "CVE.SKIP");
     return $obj;
@@ -371,6 +372,8 @@ sub test {
     @{$self->{want}} or $self->_read_META ("META.json") if $self->{deps};
 
     $self->{j}{db}{$rel} and unshift @{$self->{want}} => $rel;
+
+    $self->{want} = [ uniq @{$self->{want}} ];
 
     my @w = @{$self->{want}} or return $self; # Nothing to report
 
