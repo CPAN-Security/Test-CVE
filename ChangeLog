@@ -1,5 +1,6 @@
-0.11	- 2025-05-03, H.Merijn Brand
+0.11	- 2025-05-04, H.Merijn Brand
     * Fix documentation
+    * Run has_no_cves on in author mode
 
 0.10	- 2025-05-02, H.Merijn Brand
     * has_no_cves (issue#4)

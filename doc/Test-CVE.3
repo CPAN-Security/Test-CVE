@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Test::CVE 3"
-.TH Test::CVE 3 2025-05-03 "perl v5.40.2" "User Contributed Perl Documentation"
+.TH Test::CVE 3 2025-05-04 "perl v5.40.2" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -346,18 +346,26 @@ Severity. Most entries doe not have a severity
 Will return \f(CW\*(C`ok\*(C'\fR is no open CVE\*(Aqs are detected for the current build
 environment.
 .PP
-\&\f(CW\*(C`has_no_cves\*(C'\fR will accept all arguments that \f(CW\*(C`new\*(C'\fR accepts.
+\&\f(CW\*(C`has_no_cves\*(C'\fR will accept all arguments that \f(CW\*(C`new\*(C'\fR accepts plus one
+additional: \f(CW\*(C`author\*(C'\fR. The \f(CW\*(C`perl\*(C'\fR attribute defaults to \f(CW0\fR.
 .PP
 .Vb 1
 \& has_no_cves (@args);
 .Ve
 .PP
-is identical to
+is more or less the same as
 .PP
-.Vb 2
+.Vb 3
 \& my @cve = Test::CVE\->new (@args)\->test\->cve;
 \& ok (@cve == 0, "This release found no open CVEs");
+\& diag ("...") for map { ... } @cve;
 .Ve
+.PP
+By default, \f(CW\*(C`has_no_cves\*(C'\fR will only run in a development environment,
+but you can control that with the \f(CW\*(C`author\*(C'\fR attribute. When not passed,
+it will default to \f(CW1\fR if either the test unit is run from the \f(CW\*(C`xt/\*(C'\fR
+folder or if filder \f(CW\*(C`.git\*(C'\fR exists and the invoking perl has no version
+extension in its name.
 .SH "TODO and IDEAS"
 .IX Header "TODO and IDEAS"
 .IP \(bu 2

@@ -253,14 +253,22 @@ The list of found CVE's for this release that match the criteria
 Will return `ok` is no open CVE's are detected for the current build
 environment.
 
-`has_no_cves` will accept all arguments that `new` accepts.
+`has_no_cves` will accept all arguments that `new` accepts plus one
+additional: `author`. The `perl` attribute defaults to `0`.
 
     has_no_cves (@args);
 
-is identical to
+is more or less the same as
 
     my @cve = Test::CVE->new (@args)->test->cve;
     ok (@cve == 0, "This release found no open CVEs");
+    diag ("...") for map { ... } @cve;
+
+By default, `has_no_cves` will only run in a development environment,
+but you can control that with the `author` attribute. When not passed,
+it will default to `1` if either the test unit is run from the `xt/`
+folder or if filder `.git` exists and the invoking perl has no version
+extension in its name.
 
 # TODO and IDEAS
 

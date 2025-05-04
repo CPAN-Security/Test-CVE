@@ -486,11 +486,39 @@ sub cve {
     } # cve
 
 sub has_no_cves {
+    my %attr = @_;
+    my $tb = __PACKAGE__->builder;
+
+    # By default skip this test is not in a development env
+    if (!exists $attr{author} and
+	 ((caller)[1] =~ m{(?:^|/)xt/[^/]+\.t$} or
+	  -d ".git" && $^X =~ m{/perl$})) {
+	$attr{author}++;
+	}
+    unless ($attr{author}) {
+	$tb->ok (1, "CVE tests skipped: no author environment");
+	return;
+	}
+
+    $attr{perl} //= 0;
+
     my $cve = Test::CVE->new (@_);
     $cve->test;
     my @cve = $cve->cve;
-    my $tb = __PACKAGE__->builder;
-    $tb->ok (@cve == 0, "This release found no open CVEs");
+    if (@cve) {
+	$tb->ok (0, "This release found open CVEs");
+	foreach my $r (@cve) {
+	    my ($m, $v) = ($r->{release}, $r->{vsn});
+	    foreach my $c (@{$r->{cve}}) {
+		my $cve = join ", "  => @{$c->{cve}};
+		my $av  = join " & " => @{$c->{av}};
+		$tb->diag (0, "$m-$v : $cve for $av");
+		}
+	    }
+	}
+    else {
+	$tb->ok (1, "This release found no open CVEs");
+	}
     } # has_no_cves
 
 1;
@@ -720,14 +748,22 @@ Severity. Most entries doe not have a severity
 Will return C<ok> is no open CVE's are detected for the current build
 environment.
 
-C<has_no_cves> will accept all arguments that C<new> accepts.
+C<has_no_cves> will accept all arguments that C<new> accepts plus one
+additional: C<author>. The C<perl> attribute defaults to C<0>.
 
  has_no_cves (@args);
 
-is identical to
+is more or less the same as
 
  my @cve = Test::CVE->new (@args)->test->cve;
  ok (@cve == 0, "This release found no open CVEs");
+ diag ("...") for map { ... } @cve;
+
+By default, C<has_no_cves> will only run in a development environment,
+but you can control that with the C<author> attribute. When not passed,
+it will default to C<1> if either the test unit is run from the C<xt/>
+folder or if filder C<.git> exists and the invoking perl has no version
+extension in its name.
 
 =head1 TODO and IDEAS
 
