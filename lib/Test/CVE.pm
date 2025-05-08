@@ -134,19 +134,17 @@ sub _read_cpansa {
     $self->{verbose} and warn "Reading $src ...\n";
 
     # 'Compress-LZ4'   => [
-    #   { affected_versions => [
+    #   { version_range => [
     #       '<0.20'
     #       ],
-    #     cpansa_id         => 'CPANSA-Compress-LZ4-2014-01',
-    #     cves              => [],
-    #     description       => 'Outdated LZ4 source code with security issue on 32bit systems.
+    #     cpansec_index     => 'c996a26f0e7d8a36b0d629cc59c6025cee55d25c',
+    #     cve_id            => undef,
+    #     title             => 'Outdated LZ4 source code with security issue on 32bit systems.
     #
     #     references        => [
     #       'https://metacpan.org/changes/distribution/Compress-LZ4',
     #       'https://github.com/gray/compress-lz4/commit/fc503812b4cbba16429658e1dfe20ad8bbfd77a0'
     #       ],
-    #     reported          => '2014-07-07',
-    #     severity          => undef
     #     }
     #   ],
 
@@ -164,7 +162,7 @@ sub _read_cpansa {
 	if (my $c = $r->{content}) {
 	    # Skip warning part
 	    # CPANSA-perl-2023-47038 has more than 1 range bundled together in '>=5.30.0,<5.34.3,>=5.36.0,<5.36.3,>=5.38.0,<5.38.2'
-	    # {"Alien-PCRE2":[{"affected_versions":["<0.016000"],"cpansa_id":"CPANSA-Alien-PCRE2-2019-20454","cves":["CVE-2019-20454"],"description":"An out-
+	    # {"Alien-PCRE2":[{"version_range":["<0.016000"],"cpansec_index":"fa954e419819e668fedd0c666a0f61aae59c4c04","cve_id":"CVE-2019-20454","title":"An out-
 	    $c =~ s/^\s*([^{]+?)[\s\r\n]*\{/{/s and warn "$1\n";
 	    $self->{j}{db} = decode_json ($c);
 	    }
@@ -398,15 +396,14 @@ sub test {
 	#DDumper $self->{j}{db}{$m};
 	foreach my $c (@{$self->{j}{db}{$m}}) {
 	    # Ignored: references
-	    my $cid = $c->{cpansa_id};
-	    my @cve = grep { !exists $self->{skip}{$_} } @{$c->{cves} || []};
-	    my $dte = $c->{reported};
-	    my $sev = $c->{severity};
-	    my $dsc = $c->{description};
-	    my @vsn = @{$c->{affected_versions} || []};
+	    my $cid = $c->{cpansec_index};
+ 	    my $cve = ($c->{cve_id} && !exists $self->{skip}{$c->{cve_id}} ? $c->{cve_id} : undef);
+	    my $dte = ($cve ? decode_json($c->{cve})->{cveMetadata}{datePublished} : 'unknown');
+	    my $tit = $c->{title};
+	    my @vsn = @{$c->{version_range} || []};
 	    if (my $i = $self->{prereq}{$m}{i}) {
 		my $p = join "|" => reverse sort keys %$i;
-		my $m = join "#" => sort @cve, $cid;
+		my $m = join "#" => sort $cve, $cid;
 		"#$m#" =~ m/$p/ and next;
 		}
 	    if (@vsn) {
@@ -432,10 +429,9 @@ sub test {
 	    push @{$self->{CVE}{$m}{cve}} => {
 		cid => $cid,
 		dte => $dte,
-		cve => [ @cve ],
-		sev => $sev,
+		cve => $cve,
 		av  => [ @vsn ],
-		dsc => $dsc,
+		tit => $tit,
 		};
 	    #die DDumper { c => $c, cv => $cv, cve => $self->{CVE}{$m}, vsn => \@vsn };
 	    }
@@ -459,10 +455,10 @@ sub report {
 	my @c = @{$C->{cve}}     or next;
 	say "$m: ", $C->{min} // "-";
 	foreach my $c (@c) {
-	    my $cve = "@{$c->{cve}}" || $c->{cid};
+	    my $cve = $c->{cve_id} || $c->{cid};
 	    printf "  %-10s %-12s %-12s %s\n",
-		$c->{dte}, "@{$c->{av}}", $c->{sev} // "-", $cve;
-	    print s/^/       /gmr for wrap ("", "", $c->{dsc});
+		$c->{dte}, "@{$c->{av}}", "-", $cve;
+	    print s/^/       /gmr for wrap ("", "", $c->{tit});
 	    $n++;
 	    }
 	}
@@ -482,7 +478,7 @@ sub cve {
     my @cve;
     foreach my $m (@{$self->{want}}) {
 	my $C = $self->{CVE}{$m} or next;
-	my @c = @{$C->{cve}}     or next;
+	my @c = ($C->{cve})      or next;
 	push @cve => { release => $m, vsn => $C->{min}, cve => [ @c ] };
 	}
     @cve;
@@ -691,9 +687,8 @@ Return a list of found CVE's per release. The format will be somewhat like
        { av  => [ "<1.23" ],
          cid => "CPANSA-Some-Module-2023-01",
          cve => [ "CVE-2023-1234" ],
-         dsc => "Removes all files in /tmp",
+         tit => "Removes all files in /tmp",
          dte => "2023-01-02",
-         sev => "critical",
          },
        ...
        ],
@@ -721,23 +716,19 @@ All affected versions of the release
 
 =item cid
 
-The ID from the CPANSA database
+The CPANSec Index from the database
 
 =item cve
 
-The list of CVE tags for this item. This list can be empty.
+The CVE tag for this item.
 
-=item dsc
+=item tit
 
-Description of the vulnerability
+Title of the vulnerability
 
 =item dte
 
-Date for this CVE
-
-=item sev
-
-Severity. Most entries doe not have a severity
+Date for this CVE (if it has a CVE)
 
 =back
 
