@@ -43,7 +43,7 @@ Test::CVE - Test against known CVE's
 use 5.014000;
 use warnings;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 use version;
 use Carp;
@@ -851,7 +851,7 @@ L<Net::CVE>, L<Net::NVD>, L<Net::OSV>
 
 =head1 COPYRIGHT AND LICENSE
 
- Copyright (C) 2023-2025 H.Merijn Brand.  All rights reserved.
+ Copyright (C) 2023-2026 H.Merijn Brand.  All rights reserved.
 
 This library is free software;  you can redistribute and/or modify it under
 the same terms as Perl itself.
