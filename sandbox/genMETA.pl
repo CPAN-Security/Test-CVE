@@ -52,7 +52,7 @@ requires:
     perl:                  5.014000
     version:               0
     HTTP::Tiny:            0
-    IO::Socket::SSL:       0
+    IO::Socket::SSL:       1.968
     JSON::MaybeXS:         0
     Module::CoreList:      0
     Text::Wrap:            0
@@ -60,7 +60,6 @@ requires:
     Test::Builder::Module: 0
 recommends:
     HTTP::Tiny:            0.083
-    IO::Socket::SSL:       1.36
 suggests:
     version:               0.9929
     HTTP::Tiny:            0.089
