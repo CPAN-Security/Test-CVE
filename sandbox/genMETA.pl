@@ -59,24 +59,25 @@ requires:
     YAML::PP:              0
     Test::Builder::Module: 0
 recommends:
-    HTTP::Tiny:            0.083
+    HTTP::Tiny:            0.093
 suggests:
-    version:               0.9929
-    HTTP::Tiny:            0.089
-    IO::Socket::SSL:       2.089
+    version:               0.9934
+    HTTP::Tiny:            0.096
+    IO::Socket::SSL:       2.098
     JSON::MaybeXS:         1.004008
-    Module::CoreList:      5.20241220
-    YAML::PP:              0.38.0
+    Module::CoreList:      5.20260601
+    YAML::PP:              0.41.0
+    Perl::Tidy:            20260204
 configure_requires:
     ExtUtils::MakeMaker:   0
 configure_recommends:
     ExtUtils::MakeMaker:   7.22
 configure_suggests:
-    ExtUtils::MakeMaker:   7.72
+    ExtUtils::MakeMaker:   7.78
 test_requires:
     Test::More:            0
 test_suggests:
-    Test::More:            1.302209
+    Test::More:            1.302222
 resources:
     license:               http://dev.perl.org/licenses/
     repository:            https://github.com/CPAN-Security/Test-CVE

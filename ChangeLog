@@ -1,5 +1,6 @@
-0.13	- 2026-01-30, H.Merijn Brand
+0.13	- 2026-06-26, H.Merijn Brand
     * Comment-out debug code depending on Data::Peek
+    * Recommended/suggested versions
 
 0.12	- 2026-01-25, H.Merijn Brand
     * It is 2026
