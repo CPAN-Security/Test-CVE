@@ -43,7 +43,7 @@ Test::CVE - Test against known CVE's
 use 5.014000;
 use warnings;
 
-our $VERSION = "0.13";
+our $VERSION = "0.14";
 
 use version;
 use Carp;
@@ -102,7 +102,7 @@ sub skip {
 	    elsif (ref $skip eq "ARRAY") {
 		$self->{skip} = { map { $_ => 1 } @$skip };
 		}
-	    elsif ($skip =~ m/^\x20-\xff]+$/ and open my $fh, "<", $skip) {
+	    elsif ($skip =~ m/^[\x20-\xff]+$/ and open my $fh, "<", $skip) {
 		my %s;
 		while (<$fh>) {
 		    s/[\s\r\n]+\z//;
