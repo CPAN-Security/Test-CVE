@@ -1,5 +1,6 @@
-0.14	- 2026-08-24, H.Merijn Brand
+0.14	- 2026-09-02, H.Merijn Brand
     * Typo in regex, thanks Robert! (issue#11)
+    * CPAN.org does not forward email anymore
 
 0.13	- 2026-06-26, H.Merijn Brand
     * Comment-out debug code depending on Data::Peek

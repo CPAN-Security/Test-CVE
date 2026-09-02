@@ -41,7 +41,7 @@ version:                   VERSION
 abstract:                  Test current release against CVE's
 license:                   perl
 author:
-    - H.Merijn Brand <hmbrand@cpan.org>
+    - H.Merijn Brand <perl5@tux.freedom.nl>
 generated_by:              Author
 distribution_type:         module
 provides:
@@ -63,11 +63,11 @@ recommends:
 suggests:
     version:               0.9934
     HTTP::Tiny:            0.096
-    IO::Socket::SSL:       2.098
+    IO::Socket::SSL:       2.099
     JSON::MaybeXS:         1.004008
-    Module::CoreList:      5.20260601
+    Module::CoreList:      5.20260820
     YAML::PP:              0.41.0
-    Perl::Tidy:            20260204
+    Perl::Tidy:            20260826
 configure_requires:
     ExtUtils::MakeMaker:   0
 configure_recommends:
@@ -77,7 +77,7 @@ configure_suggests:
 test_requires:
     Test::More:            0
 test_suggests:
-    Test::More:            1.302222
+    Test::More:            1.302224
 resources:
     license:               http://dev.perl.org/licenses/
     repository:            https://github.com/CPAN-Security/Test-CVE
